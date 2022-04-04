@@ -8,5 +8,6 @@ export const store = configureStore({
   reducer: {
     counter: counterReducer,
     watched: watchedReducer,
+    searches: searchReducer,
   },
 });
