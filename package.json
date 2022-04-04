@@ -24,6 +24,7 @@
   "homepage": "https://github.com/GoodWatch/GoodWatch#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "axios": "^0.26.1",
     "pg": "^8.7.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
