@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialWatchedState = {
   watchedList: [],
 };
 
 export const watchedSlice = createSlice({
   name: 'watched',
-  initialState,
+  initialWatchedState,
   reducers: {
     addMovie: (state, action) => {
       state.watchedList = state.watchedList.push(action.payload);
