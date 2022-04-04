@@ -8,7 +8,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const typeDefs = require('./typeDefs.js');
-const resolvers = require('./resolvers.js')
+const resolvers = require('./resolvers/index.js');
+const movieAPI = require('./datasources/movieAPI.js');
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
@@ -16,6 +17,12 @@ async function startApolloServer(typeDefs, resolvers) {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    dataSources: () => ({
+      MovieAPI: new movieAPI()
+    }),
+    context: ({ req }) => {
+      return { req };
+    },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
@@ -56,8 +63,6 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
-
-
 
 /*
     Creating our Apollo context function
