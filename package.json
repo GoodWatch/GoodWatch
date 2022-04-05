@@ -29,6 +29,7 @@
     "apollo-server-express": "^3.6.7",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "graphql": "^16.3.0",

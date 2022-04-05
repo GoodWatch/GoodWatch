@@ -109,30 +109,28 @@ const typeDefs = gql`
 
   type Query {
     getUser: [User]
-    getMovies(username: String!): [MovieExt]
+    getMovies: [MovieExt]
     searchMovies(searchTerm: String!, pageNum: Int): [Movie]
-    getMovieInfo(movie_id: Int!, username: String!): MovieExt
+    getMovieInfo(movie_id: Int!): MovieExt
   }
 
   type Mutation {
     addUser(username: String!, password: String!, email: String!): User!
-    editUser(name: String!, password: String!, email: String): User!
-    deleteUser(username: String!): String!
+    editUser(password: String!, email: String): User!
+    deleteUser: String!
     addMovie(
-      username: String!
       movie_id: Int!
       rating: Int
       comment: String
       watched: Boolean
     ): User_Movie
     editMovie(
-      username: String!
       movie_id: Int!
       rating: Int
       comment: String
       watched: Boolean
     ): User_Movie
-    deleteMovie(username: String!, movie_id: Int!): String
+    deleteMovie(movie_id: Int!): String
   }
 `;
 

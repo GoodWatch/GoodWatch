@@ -1,4 +1,5 @@
 const pool = require('../db');
+const bcrypt = require('bcrypt');
 
 module.exports = {
   Query: {
@@ -15,9 +16,13 @@ module.exports = {
   Mutation: {
     async addUser(_, { username, password, email }) {
       try {
+        const hashPass = await bcrypt.hash(
+          password,
+          Number(process.env.SALT_WORK_FACTOR)
+        );
         const query = {
           text: 'INSERT INTO users(username, password, email) VALUES($1, $2, $3) RETURNING *',
-          values: [username, password, email],
+          values: [username, hashPass, email],
         };
         const user = await pool.query(query);
         return user.rows[0];
@@ -25,10 +30,13 @@ module.exports = {
         throw new Error(error);
       }
     },
-    async editUser(_, { username, password, email }) {
+    async editUser(_, { password, email }, { username }) {
       try {
         const query = {
-          text: 'UPDATE users SET email=$3, password=$2 WHERE username=$1 RETURNING *',
+          text: `UPDATE users SET 
+          email = COALESCE($3, email),
+          password = COALESCE($2, password)
+          WHERE username=$1 RETURNING *`,
           values: [username, password, email],
         };
         const user = await pool.query(query);
@@ -37,7 +45,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    async deleteUser(_, { username }) {
+    async deleteUser(_, __, { username }) {
       try {
         const query = {
           text: 'DELETE FROM users WHERE username=$1',
