@@ -1,8 +1,17 @@
 const pool = require('../db');
 
+// function shuffleArray(array) {
+//   for (var i = array.length - 1; i > 0; i--) {
+//     var j = Math.floor(Math.random() * (i + 1));
+//     var temp = array[i];
+//     array[i] = array[j];
+//     array[j] = temp;
+//   }
+// }
+
 module.exports = {
   Query: {
-    async getMovies(_, {pageNum = 1}, { dataSources, username }) {
+    async getMovies(_, { pageNum = 1 }, { dataSources, username }) {
       try {
         const querySize = 10; // set number of results per query
         const query = {
@@ -36,6 +45,31 @@ module.exports = {
     searchMovies: (_, { searchTerm, pageNum = 1 }, { dataSources }) => {
       return dataSources.MovieAPI.searchMovies({ searchTerm, pageNum });
     },
+    getMovieRecs: async (_, __, { username, dataSources }) => {
+      const querySize = 3;
+      const query = {
+        text: `SELECT * FROM Users_Movies 
+        WHERE username = $1
+        ORDER BY rating DESC
+        limit $2`,
+        values: [username, querySize],
+      };
+      const movies = await pool.query(query);
+      // console.log(movies.rows);
+      const promiseArr = movies.rows.map(({ movie_id }) =>
+        dataSources.MovieAPI.getMovieRecs({ movie_id })
+      );
+      const movieInfoArr = await Promise.all(promiseArr);
+      const recMovies = movieInfoArr.flat();
+      const indices = [];
+      while (indices.length < 5) {
+        const index = Math.floor(recMovies.length * Math.random());
+        if (!indices.includes(index)) {
+          indices.push(index);
+        }
+      }
+      return indices.map((s) => recMovies[s]);
+    },
   },
 
   Mutation: {
@@ -46,12 +80,22 @@ module.exports = {
     ) {
       try {
         const query = {
-          text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5) RETURNING *',
+          text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5)',
           values: [username, movie_id, rating, comment, watched],
         };
-        const user = await pool.query(query);
-        return user.rows[0];
+        await pool.query(query);
+        return {
+          success: true,
+          message: 'Added Movie to Library',
+          data: [],
+        };
       } catch (error) {
+        if (error.code === '23505') {
+          return {
+            success: false,
+            message: 'Movie is already in library',
+          };
+        }
         throw new Error(error);
       }
     },
@@ -62,12 +106,14 @@ module.exports = {
           rating = COALESCE($3, rating),
           comment = COALESCE($4, comment),
           watched = COALESCE($5, watched)
-          WHERE username=$1 AND movie_id=$2 RETURNING *`,
+          WHERE username=$1 AND movie_id=$2`,
           values: [username, movie_id, rating, comment, watched],
         };
-        console.log(query);
-        const user = await pool.query(query);
-        return user.rows[0];
+        await pool.query(query);
+        return {
+          success: true,
+          message: 'Added changes',
+        };
       } catch (error) {
         throw new Error(error);
       }

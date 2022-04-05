@@ -23,6 +23,18 @@ class MovieAPI extends RESTDataSource {
     });
     return response;
   }
+  async getMovieRecs({ movie_id }) {
+    try {
+      const response = await this.get(`/movie/${movie_id}/recommendations`, {
+        language: 'en-US',
+        api_key,
+        page: 1,
+      });
+      return response.results;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
 }
 
 //https://api.themoviedb.org/3/movie/121?api_key=c8b6a411fa661f7f14dc3d147bc07f60
