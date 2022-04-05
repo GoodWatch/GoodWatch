@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
@@ -11,48 +11,81 @@ const LoginPage = () => {
     setUsername(event.target.value);
   };
 
-  const handlePassword = (event) => {
+  const handlePasswordInput = (event) => {
     setPassword(event.target.value);
   };
 
   const [status, setStatus] = useState(' ');
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const login = (username, password) => {
-    axios.post('/user', {
-      username,
-      password
-    })
-      .then((userinfo) => {
-        if (userinfo.err) {
-          console.log('error in login');
-          setStatus(
-            'Unable to recognize account. Please check your credentials and try again.'
-          );
-          return;
-        }
+  const login = async (username, password) => {
 
-        history.push('/dashboard');
-      })
-      .catch((error) => {
-        setStatus(
-          'An error occured on the server. Please check your credentials and try again.'
-        );
-        console.log(error);
-      })
+    try {
+
+      const response = await axios.post('/user', {
+        username,
+        password
+      });
+      // update state
+
+      navigate.push('/dashboard');
+
+      // .then((userinfo) => {
+      // if (userinfo.err) {
+      //   console.log('error in login');
+      //   setStatus(
+      //     'Unable to recognize account. Please check your credentials and try again.'
+      //     );
+      //     return;
+      //   }
+
+    } catch (error) {
+      console.log(error);
+      setStatus(
+        'An error occured on the server. Please check your credentials and try again.'
+      );
+    }
   };
 
   return (
-    <div>
+    <>
       <div>
         <Link to="/dashboard">
           Dashboard
         </Link>
       </div>
-    </div>>
+      <div>
+        <form>
+          <input
+            onChange={handleUsernameInput}
+            type="text"
+            placeholder="username"
+            name="user"
+            value={username}
+          ></input>
+          <input
+            onChange={handlePasswordInput}
+            type="text"
+            placeholder="password"
+            name="password"
+            value={password}
+          ></input>
+          <span>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                login(username, password);
+                setUsername('');
+                setPassword('');
+              }}
+            > Log in </button>
+          </span>
+        </form>
+      </div>
+
+    </>
 
   );
-
-}
+};
 
 export default LoginPage;

@@ -1,10 +1,10 @@
 import React from 'react';
 
-function ReviewModal() {
+const ReviewModal = () => {
   return(
     <>
     </>
   );
-}
+};
 
 export default ReviewModal;

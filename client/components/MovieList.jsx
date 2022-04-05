@@ -1,1 +1,14 @@
-import React from "react";
+import React from 'react';
+
+
+const MovieList = () => {
+
+  return(
+    <>
+
+    </>
+  );
+
+};
+
+export default MovieList;

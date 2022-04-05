@@ -1,9 +1,11 @@
 import React from 'react';
 
-export function SearchWindow() {
+const SearchWindow = () => {
   return(
     <>
 
     </>
   );
-}
+};
+
+export default SearchWindow;

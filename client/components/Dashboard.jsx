@@ -6,12 +6,11 @@ import ReviewModal from './ReviewModal';
 const Dashboard = () => {
   return(
     <>
-      <MovieList></MovieList>
-      <SearchWindow></SearchWindow>
-      <ReviewModal></ReviewModal>
+      <MovieList />
+      <SearchWindow />
+      <ReviewModal />
     </>
   );
-}
-
+};
 
 export default Dashboard;
