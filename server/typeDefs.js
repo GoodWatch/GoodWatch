@@ -7,14 +7,6 @@ const typeDefs = gql`
     email: String!
   }
 
-  type User_Movie {
-    movie_id: Int!
-    username: String!
-    rating: Int
-    comment: String
-    watched: Boolean
-  }
-
   type Movie {
     adult: Boolean
     genre_ids: [Int]
@@ -29,9 +21,6 @@ const typeDefs = gql`
     video: Boolean
     vote_average: Float
     vote_count: Int
-    rating: Int
-    comment: String
-    watched: Boolean
   }
 
   type MovieExt {
@@ -94,29 +83,38 @@ const typeDefs = gql`
     name: String
   }
 
+  type Response {
+    success: Boolean!
+    message: String!
+    data: [MovieExt]
+  }
+
+
   type Query {
-    getUser: [User]
+    login(username: String!, password: String!): Response!
     getMovies(pageNum: Int): [MovieExt]
     searchMovies(searchTerm: String!, pageNum: Int): [Movie]
     getMovieInfo(movie_id: Int!): MovieExt
+    logout: String!
+    getMovieRecs: [Movie]
   }
 
   type Mutation {
-    addUser(username: String!, password: String!, email: String!): User!
-    editUser(password: String!, email: String): User!
-    deleteUser: String!
+    signUp(username: String!, password: String!, email: String!): Response!
+    editUser(password: String!, email: String): User
+    deleteUser: String
     addMovie(
       movie_id: Int!
       rating: Int
       comment: String
       watched: Boolean!
-    ): User_Movie
+    ): Response
     editMovie(
       movie_id: Int!
       rating: Int
       comment: String
       watched: Boolean
-    ): User_Movie
+    ): Response
     deleteMovie(movie_id: Int!): String
   }
 `;
