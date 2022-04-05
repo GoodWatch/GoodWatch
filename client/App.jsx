@@ -10,10 +10,10 @@ import { Outlet, Link } from 'react-router-dom';
 const light = {
   palette: {
     primary: {
-      main: '#1061E4',
+      main: '#0046B6',
     },
     secondary: {
-      main: '#F5AEBC',
+      main: '#fff',
     },
   },
 };
@@ -25,7 +25,8 @@ const App = (props) => {
       <div className='router'>
         <main>
           {/* <h1>GoodWatch</h1> */}
-          <Link to='/login'> </Link>
+          {/* <Link to='/login'> </Link> */}
+          <LoginPage />
           <Link to='/dashboard'> </Link>
           <Outlet />
         </main>

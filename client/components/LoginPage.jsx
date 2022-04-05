@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import GoodWatchLogo from '../Public/GoodWatchFilled.png';
+import { InputAdornment } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../slices/usernameSlice';
 
@@ -29,9 +32,8 @@ const LoginPage = () => {
         username,
         password,
       });
-      // update store
-      // username = setUsername(username);
-      // dispatch(setUser(username));
+      // setting user in store
+      dispatch(setUser(username));
       navigate.push('/dashboard');
 
       // .then((userinfo) => {
@@ -51,66 +53,85 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='login-page'>
-      <img
-        src={GoodWatchLogo}
-        alt='goodwatch-logo'
-        className='goodwatch-logo'
-      />
-      <div>
-        <Link to='/dashboard'>Dashboard</Link>
-      </div>
-      <div>
-        <form>
-          <TextField
-            onChange={handleUsernameInput}
-            type='text'
-            placeholder='username'
-            name='user'
-            size='small'
-            value={username}
-          ></TextField>
-          <br />
-          <TextField
-            onChange={handlePasswordInput}
-            type='text'
-            placeholder='password'
-            name='password'
-            size='small'
-            value={password}
-          ></TextField>
-          <span>
+    <div className='center-screen'>
+      <div className='login-page'>
+        <img
+          src={GoodWatchLogo}
+          alt='goodwatch-logo'
+          className='goodwatch-logo'
+        />
+        <div>
+          <Link to='/dashboard'>Dashboard Back Door</Link>
+        </div>
+        <div className='login-form'>
+          <form>
+            <TextField
+              onChange={handleUsernameInput}
+              type='text'
+              color='secondary'
+              placeholder='username'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              }}
+              name='user'
+              size='small'
+              style={{ margin: '4px', width: '350px' }}
+              value={username}
+            ></TextField>
             <br />
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                login(username, password);
-                setUsername('');
-                setPassword('');
+            <TextField
+              onChange={handlePasswordInput}
+              type='text'
+              placeholder='password'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <LockIcon />
+                  </InputAdornment>
+                ),
               }}
-              variant='contained'
+              name='password'
               size='small'
-              color='secondary'
-              className='login-buttons'
-            >
-              Log in
-            </Button>
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                login(username, password);
-                setUsername('');
-                setPassword('');
-              }}
-              variant='contained'
-              size='small'
-              color='secondary'
-              className='login-buttons'
-            >
-              Sign Up
-            </Button>
-          </span>
-        </form>
+              value={password}
+              style={{ margin: '4px', width: '350px' }}
+            ></TextField>
+            <br />
+            <span>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  login(username, password);
+                  setUsername('');
+                  setPassword('');
+                }}
+                variant='contained'
+                size='medium'
+                color='primary'
+                style={{ margin: '10px' }}
+              >
+                Log in
+              </Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  login(username, password);
+                  setUsername('');
+                  setPassword('');
+                }}
+                variant='contained'
+                size='medium'
+                color='primary'
+                style={{ margin: '10px' }}
+              >
+                Sign Up
+              </Button>
+            </span>
+          </form>
+        </div>
       </div>
     </div>
   );
