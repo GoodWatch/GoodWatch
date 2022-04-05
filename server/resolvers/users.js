@@ -1,20 +1,62 @@
 const pool = require('../db');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const movieResolver = require('./movies');
+
+const setToken = (res, username) => {
+  const token = jwt.sign({ username: username }, process.env.SECRET_JWT);
+  res.cookie('access_token', token, {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: 'true',
+  });
+};
 
 module.exports = {
   Query: {
-    async getUser() {
-      try {
-        console.log('getting users...');
-        const user = await pool.query('SELECT * FROM users');
-        return user.rows;
-      } catch (error) {
-        throw new Error(error);
+    async login(_, { username, password }, { dataSources, res }) {
+      const query = {
+        text: 'SELECT * FROM Users WHERE username = $1',
+        values: [username],
+      };
+      const user = await pool.query(query);
+      if (user.rows) {
+        const match = await bcrypt.compare(password, user.rows[0].password);
+        if (match) {
+          // Set users token
+          setToken(res, user.rows[0].username);
+          const allMovieInfoArr = await movieResolver.Query.getMovies(
+            _,
+            { pageNum: 1 },
+            { dataSources, username }
+          );
+          return {
+            success: true,
+            message: 'Logged in',
+            data: allMovieInfoArr,
+          };
+        } else {
+          return {
+            success: false,
+            message: 'Incorrect credentials',
+            data: [],
+          };
+        }
+      } else {
+        return {
+          success: false,
+          message: 'Username or password does not match',
+          data: [],
+        };
       }
+    },
+    async logout(_, __, { res }) {
+      res.clearCookie('access_token');
+      return 'logged out';
     },
   },
   Mutation: {
-    async addUser(_, { username, password, email }) {
+    async signUp(_, { username, password, email }, { res }) {
       try {
         const hashPass = await bcrypt.hash(
           password,
@@ -24,9 +66,21 @@ module.exports = {
           text: 'INSERT INTO users(username, password, email) VALUES($1, $2, $3) RETURNING *',
           values: [username, hashPass, email],
         };
-        const user = await pool.query(query);
-        return user.rows[0];
+        await pool.query(query);
+        setToken(res, username);
+        return {
+          success: true,
+          message: 'Signed Up',
+          data: [],
+        };
       } catch (error) {
+        if (error.code === '23505') {
+          return {
+            success: false,
+            message: 'Username already exists',
+            data: [],
+          };
+        }
         throw new Error(error);
       }
     },
