@@ -2,7 +2,7 @@ const pool = require('../db');
 
 module.exports = {
   Query: {
-    async getMovies(_, __, { dataSources, username }) {
+    async getMovies(_, {pageNum = 1}, { dataSources, username }) {
       try {
         const query = {
           text: 'SELECT * FROM Users_Movies WHERE username = $1',
@@ -38,7 +38,11 @@ module.exports = {
   },
 
   Mutation: {
-    async addMovie(_, { movie_id, rating, comment, watched }, { username }) {
+    async addMovie(
+      _,
+      { movie_id, rating = 0, comment = '', watched },
+      { username }
+    ) {
       try {
         const query = {
           text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5) RETURNING *',

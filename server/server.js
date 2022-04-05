@@ -16,21 +16,8 @@ const dataSources = () => ({
   MovieAPI: new MovieAPI(),
 });
 
-const context = ({ req }) => {
-  // get the user token from the headers
-  const token = req.headers.authorization || '';
-  console.log(req.cookies.access_token);
-  const splitToken = token.split(' ')[1];
-  try {
-    jwt.verify(splitToken, process.env.SECRET_JWT);
-  } catch (e) {
-    throw new AuthenticationError(
-      'Authentication token is invalid, please log in'
-    );
-  }
-};
-
 async function startApolloServer(typeDefs, resolvers, dataSources) {
+  const isProduction = process.env.NODE_ENV === 'production';
   const app = express();
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
@@ -57,9 +44,16 @@ async function startApolloServer(typeDefs, resolvers, dataSources) {
 
   app.use(bodyParser.json());
   app.use(cookieParser());
-  app.use(cors());
+  !isProduction && app.set('trust proxy', 1);
+  // app.use(cors());
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({
+    app,
+    cors: {
+      origin: ['https://studio.apollographql.com'],
+      credentials: true,
+    },
+  });
 
   app.use('/auth', authRouter);
 
@@ -68,15 +62,3 @@ async function startApolloServer(typeDefs, resolvers, dataSources) {
 }
 
 startApolloServer(typeDefs, resolvers, dataSources);
-
-// TODO: REPLACE WITH env FILE
-const SECRET_KEY = process.env.SECRET_KEY;
-
-/*
-    Starting the app
-*/
-// app.listen(port, () =>
-//   console.log(
-//     `🔥🔥🔥 GraphQL + Express auth tutorial listening on port ${port}!`
-//   )
-// );

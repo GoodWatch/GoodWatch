@@ -94,22 +94,9 @@ const typeDefs = gql`
     name: String
   }
 
-  type moviePreferences {
-    user: User
-    favorites: [Favorite_Movies]
-    watched: [Watched_Movies]
-  }
-
-  type Favorite_Movies {
-    ID: Int!
-  }
-  type Watched_Movies {
-    ID: Int!
-  }
-
   type Query {
     getUser: [User]
-    getMovies: [MovieExt]
+    getMovies(pageNum: Int): [MovieExt]
     searchMovies(searchTerm: String!, pageNum: Int): [Movie]
     getMovieInfo(movie_id: Int!): MovieExt
   }
@@ -122,7 +109,7 @@ const typeDefs = gql`
       movie_id: Int!
       rating: Int
       comment: String
-      watched: Boolean
+      watched: Boolean!
     ): User_Movie
     editMovie(
       movie_id: Int!

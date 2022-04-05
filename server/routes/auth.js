@@ -36,4 +36,18 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/test', async (req, res) => {
+  const token = jwt.sign({ username: 'ariHash' }, process.env.SECRET_JWT);
+  res
+    .cookie('access_token', token, {
+      // httpOnly: true,
+      sameSite: 'none',
+      secure: 'true',
+    })
+    .send({
+      success: true,
+      message: 'Logged in',
+    });
+});
+
 module.exports = router;
