@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import MovieCardSearched from './MovieCardSearched';
+import SearchList from './SearchList';
 
 const SearchWindow = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,6 +9,8 @@ const SearchWindow = () => {
   const handleSearchTermInput = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  console.log('search term is: ', searchTerm);
 
   return (
     <div className='search-window'>
@@ -21,7 +23,7 @@ const SearchWindow = () => {
           name='searchTerm'
           size='small'
           value={searchTerm}
-          style={{ width: '50%' }}
+          style={{ width: '70%' }}
         ></TextField>
         <span>
           <Button
@@ -38,12 +40,8 @@ const SearchWindow = () => {
         </span>
       </form>
       <div className='search-results'>
-        {
-          searchTerm ? 
-            `Showing results for ${searchTerm}:` && <MovieCardSearched />
-            : 
-            ''
-        }
+        {searchTerm ? `Showing results for ${searchTerm}:` : ''}
+        {searchTerm && <SearchList />}
       </div>
     </div>
   );

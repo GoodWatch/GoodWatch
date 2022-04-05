@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { Button } from '@mui/material';
-import MovieCardWatched from './MovieCardWatched';
 import MovieList from './MovieList';
 
 const MovieContainer = () => {
