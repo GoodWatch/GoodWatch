@@ -1,21 +1,37 @@
-body {
-  background-color: white;
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  background: #0046B6;
   color: black;
   font-family: Arial, Helvetica, sans-serif
 }
 
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
 .login-page {
   background-color: #1061E4;
-  height: 500px;
-  width: 300px;
+  height: 700px;
+  width: 500px;
   text-align: center;
+  border: 2px solid #fff;
+  border-radius: 5px;
 }
 
 .goodwatch-logo {
-  height:50%;
-
+  height:70%;
 }
 
-.login-buttons {
-  margin: 2px;
+.dashboard {
+  background-color: #fff;
+  min-height: 98vh;
+  padding: 10px;
 }

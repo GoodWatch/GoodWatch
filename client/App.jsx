@@ -13,7 +13,7 @@ const light = {
       main: '#1061E4',
     },
     secondary: {
-      main: '#F5AEBC',
+      main: '#fff',
     },
   },
 };
@@ -25,7 +25,8 @@ const App = (props) => {
       <div className='router'>
         <main>
           {/* <h1>GoodWatch</h1> */}
-          <Link to='/login'> </Link>
+          {/* <Link to='/login'> </Link> */}
+          <LoginPage />
           <Link to='/dashboard'> </Link>
           <Outlet />
         </main>
