@@ -1,18 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import 'regenerator-runtime/runtime';
 const axios = require('axios');
 
-const initialSearchState = {
+const initialState = {
   displayResults: [],
-  pageNumber: 1
+  pageNumber: 1,
 };
 
 export const showResults = createAsyncThunk(
   '/searchResults', // <- need endpoint name from backend
-  async() => {
+  async () => {
     try {
       const response = await axios.post('/search/', {
-        index: initialSearchState.pageNumber
+        index: initialState.pageNumber,
       });
       return response.data;
     } catch (e) {
@@ -23,14 +24,14 @@ export const showResults = createAsyncThunk(
 
 const searchReducer = createSlice({
   name: 'searches',
-  initialState: initialSearchState,
+  initialState,
   reducers: {
     setSearchResults: (state, action) => {
       state.displayResults = action.payload;
     },
     incrementPageNumber: (state) => {
       state.pageNumber += 1; // <- redundant with extraReducers - might remove
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(showResults.fulfilled, (state) => {

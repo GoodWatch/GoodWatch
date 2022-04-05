@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,12 +18,10 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const login = async (username, password) => {
-
     try {
-
       const response = await axios.post('/user', {
         username,
-        password
+        password,
       });
       // update state
 
@@ -38,7 +35,6 @@ const LoginPage = () => {
       //     );
       //     return;
       //   }
-
     } catch (error) {
       console.log(error);
       setStatus(
@@ -48,11 +44,9 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <div className="login-page">
       <div>
-        <Link to="/dashboard">
-          Dashboard
-        </Link>
+        <Link to="/dashboard">Dashboard</Link>
       </div>
       <div>
         <form>
@@ -78,13 +72,13 @@ const LoginPage = () => {
                 setUsername('');
                 setPassword('');
               }}
-            > Log in </button>
+            >
+              Log in
+            </button>
           </span>
         </form>
       </div>
-
-    </>
-
+    </div>
   );
 };
 

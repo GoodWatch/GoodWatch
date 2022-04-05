@@ -4,12 +4,12 @@ import MovieList from './MovieList';
 import ReviewModal from './ReviewModal';
 
 const Dashboard = () => {
-  return(
-    <>
+  return (
+    <div className='dashboard'>
       <MovieList />
       <SearchWindow />
       <ReviewModal />
-    </>
+    </div>
   );
 };
 

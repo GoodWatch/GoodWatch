@@ -6,10 +6,11 @@ import { store } from './store';
 import { Provider } from 'react-redux';
 
 render(
-  // <BrowserRouter>
-  //   <Provider store={store}>
+  // <h1>Testing</h1>,
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
-  //   </Provider>
-  // </BrowserRouter>,
-  // document.getElementById('app')
+    </Provider>
+  </BrowserRouter>,
+  document.getElementById('app')
 );

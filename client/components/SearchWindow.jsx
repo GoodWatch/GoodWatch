@@ -1,10 +1,10 @@
 import React from 'react';
 
 const SearchWindow = () => {
-  return(
-    <>
-
-    </>
+  return (
+    <div className='search-window'>
+      <h2>Search Window</h2>
+    </div>
   );
 };
 
