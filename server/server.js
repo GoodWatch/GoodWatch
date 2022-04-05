@@ -9,17 +9,20 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const typeDefs = require('./typeDefs.js');
 const resolvers = require('./resolvers/index.js');
-const movieAPI = require('./datasources/movieAPI.js');
+const MovieAPI = require('./datasources/movieAPI.js');
 
-async function startApolloServer(typeDefs, resolvers) {
+const dataSources = () => ({
+  MovieAPI: new MovieAPI(),
+});
+
+async function startApolloServer(typeDefs, resolvers, dataSources) {
   const app = express();
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    dataSources: () => ({
-      MovieAPI: new movieAPI()
-    }),
+    dataSources,
+    introspection: true,
     context: ({ req }) => {
       return { req };
     },
@@ -32,7 +35,7 @@ async function startApolloServer(typeDefs, resolvers) {
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 }
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer(typeDefs, resolvers, dataSources);
 
 /*
     Requiring packages that we will 

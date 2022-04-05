@@ -15,8 +15,18 @@ const typeDefs = gql`
   }
 
   type Movie {
-    movie_id: Int!
-    overview: String!
+    genre_ids: [Int]
+    id: Int!
+    original_language: String
+    original_title: String
+    overview: String
+    popularity: Int
+    poster_path: String
+    release_date: String
+    title: String
+    video: Boolean
+    vote_average: Int
+    vote_count: Int
   }
 
   type Movie_Results {
@@ -36,12 +46,10 @@ const typeDefs = gql`
     ID: Int!
   }
 
-
-
   type Query {
     getUser: [User]
     getMovies: [Movie]
-    searchMovies(movie: String!): Movie
+    searchMovies(searchTerm: String!, pageNum: Int): [Movie]
   }
 
   type Mutation {
@@ -52,3 +60,25 @@ const typeDefs = gql`
 `;
 
 module.exports = typeDefs;
+
+/*
+extra shytttt
+
+type Movie {
+    adult: Boolean,
+    genre_ids: [Int]
+    id: Int
+    original_language: String
+    original_title: String
+    overview: String
+    popularity: Int
+    poster_path: String
+    release_date: String
+    title: String
+    video: Boolean
+    vote_average: Int
+    vote_count: Int
+  }
+
+
+*/
