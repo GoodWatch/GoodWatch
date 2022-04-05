@@ -8,5 +8,17 @@ const SearchList = (props) => {
   });
 
   const feedItems = [];
-  //
+
+  searchResults.forEach((movie, i) => {
+    feedItems.push(
+      <MovieCardSearched 
+        key={i}
+        title={movie.original_title} 
+        poster={movie.poster_path}
+      />
+    );
+  });
+  return <div >{feedItems}</div>;
 }
+
+export default SearchList;

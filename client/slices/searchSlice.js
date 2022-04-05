@@ -106,7 +106,7 @@ const dummyState = [
 ];
 
 const initialState = {
-  displayResults: [dummyState],
+  displayResults: [...dummyState],
   pageNumber: 1,
 };
 

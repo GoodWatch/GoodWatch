@@ -1,10 +1,13 @@
 import React from 'react';
 
-const searchResults = () => {
+const searchResults = (props) => {
+  const poster = 'https://image.tmdb.org/t/p/w92' + `${props.poster}`;
+
   return (
-    <>
-      <h3>Searched movies...</h3>
-    </>
+    <div className='movie-card-watched'>
+      <img className='movie-card' src={poster} />
+      <span>{props.title}</span>
+    </div>
   );
 };
 

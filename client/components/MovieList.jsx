@@ -9,14 +9,17 @@ const MovieList = (props) => {
 
   const feedItems = [];
   // check movie
-  myMovies.filter(movie => movie.watched == props.watched).forEach((movie, i) => {
-    feedItems.push(
-      <MovieCardWatched 
-        key={i} 
-        title={movie.original_title} 
-        poster={movie.poster_path} 
-      />);
-  });
+  myMovies
+    .filter((movie) => movie.watched == props.watched)
+    .forEach((movie, i) => {
+      feedItems.push(
+        <MovieCardWatched
+          key={i}
+          title={movie.original_title}
+          poster={movie.poster_path}
+        />
+      );
+    });
   return <div className='movie-list'>{feedItems}</div>;
 };
 
