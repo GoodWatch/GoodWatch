@@ -7,6 +7,7 @@
     "test": "jest --verbose",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open /\" \"cross-env NODE_ENV=development nodemon ./server/server.js\"",
+    "start-dev": "cross-env NODE_ENV=development nodemon ./server/server.js",
     "start": "nodemon ./server/server.js"
   },
   "repository": {
@@ -24,7 +25,16 @@
   "homepage": "https://github.com/GoodWatch/GoodWatch#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "apollo-datasource-rest": "^3.5.2",
+    "apollo-server-core": "^3.6.7",
+    "apollo-server-express": "^3.6.7",
     "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "graphql": "^16.3.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
