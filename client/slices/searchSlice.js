@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import 'regenerator-runtime/runtime';
 const axios = require('axios');
 
+
 const dummyState = [
   {
     poster_path: '/IfB9hy4JH1eH6HEfIgIGORXi5h.jpg',
@@ -113,8 +114,8 @@ export const showResults = createAsyncThunk(
   '/searchResults', // <- unique string
   async () => {
     try {
-      const response = await axios.post('/search/', {
-        index: initialState.pageNumber,
+      const response = await axios.post('/graphql', {
+
       });
       return response.data;
     } catch (e) {

@@ -8,10 +8,7 @@ const MovieContainer = () => {
   const [watched, setWatchedState] = useState(true);
 
   const handleClick = () => {
-    setWatchedState((prevState) => {
-      prevState = !prevState;
-      return { ...prevState };
-    });
+    setWatchedState((cur) => !cur);
   };
   return (
     <div className='movie-container'>

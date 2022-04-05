@@ -9,7 +9,7 @@ const MovieList = (props) => {
 
   const feedItems = [];
   // check movie
-  myMovies.filter(movie => movie.watched === props.watched).forEach((movie, i) => {
+  myMovies.filter(movie => movie.watched == props.watched).forEach((movie, i) => {
     feedItems.push(
       <MovieCardWatched 
         key={i} 
