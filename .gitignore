@@ -18,5 +18,5 @@ dist/
 # jest coverage
 coverage/
 
-# .env file
+# env file
 .env

@@ -24,7 +24,7 @@ const App = (props) => {
       {/* <CssBaseline /> */}
       <div className='router'>
         <main>
-          <h1>GoodWatch</h1>
+          {/* <h1>GoodWatch</h1> */}
           <Link to='/login'> </Link>
           <Link to='/dashboard'> </Link>
           <Outlet />
