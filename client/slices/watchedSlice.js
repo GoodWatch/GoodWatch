@@ -1,18 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialWatchedState = {
+const initialState = {
   watchedList: [],
 };
 
 export const watchedSlice = createSlice({
   name: 'watched',
-  initialWatchedState,
+  initialState,
   reducers: {
     addMovie: (state, action) => {
       state.watchedList = state.watchedList.push(action.payload);
     },
     deleteMovie: (state, action) => {
-      state.watchedList = state.watchedList.filter((movie) => movie != action.payload);
+      state.watchedList = state.watchedList.filter(
+        (movie) => movie != action.payload
+      );
     },
   },
 });
