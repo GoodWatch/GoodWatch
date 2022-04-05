@@ -10,8 +10,9 @@ const typeDefs = gql`
   type User_Movie {
     movie_id: Int!
     username: String!
-    rating: Int!
-    overview: String!
+    rating: Int
+    comment: String
+    watched: Boolean
   }
 
   type Movie {
@@ -20,13 +21,16 @@ const typeDefs = gql`
     original_language: String
     original_title: String
     overview: String
-    popularity: Int
+    popularity: Float
     poster_path: String
     release_date: String
     title: String
     video: Boolean
-    vote_average: Int
+    vote_average: Float
     vote_count: Int
+    rating: Int
+    comment: String
+    watched: Boolean
   }
 
   type Movie_Results {
@@ -48,37 +52,36 @@ const typeDefs = gql`
 
   type Query {
     getUser: [User]
-    getMovies: [Movie]
+    getMovies(username: String!): [Movie]
     searchMovies(searchTerm: String!, pageNum: Int): [Movie]
+    getMovieInfo(movie_id: Int!, username: String!): Movie
   }
 
   type Mutation {
     addUser(username: String!, password: String!, email: String!): User!
     editUser(name: String!, password: String!, email: String): User!
     deleteUser(username: String!): String!
+    addMovie(
+      username: String!
+      movie_id: Int!
+      rating: Int
+      comment: String
+      watched: Boolean
+    ): User_Movie
+    editMovie(
+      username: String!
+      movie_id: Int!
+      rating: Int
+      comment: String
+      watched: Boolean
+    ): User_Movie
+    deleteMovie(
+      username: String!
+      movie_id: Int!
+    ): String
   }
 `;
 
 module.exports = typeDefs;
 
-/*
-extra shytttt
 
-type Movie {
-    adult: Boolean,
-    genre_ids: [Int]
-    id: Int
-    original_language: String
-    original_title: String
-    overview: String
-    popularity: Int
-    poster_path: String
-    release_date: String
-    title: String
-    video: Boolean
-    vote_average: Int
-    vote_count: Int
-  }
-
-
-*/

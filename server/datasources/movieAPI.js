@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
-const api_key = 'c8b6a411fa661f7f14dc3d147bc07f60';
+const api_key = process.env.API_KEY;
 
 class MovieAPI extends RESTDataSource {
   constructor() {
@@ -7,27 +7,21 @@ class MovieAPI extends RESTDataSource {
     this.baseURL = 'https://api.themoviedb.org/3/';
   }
 
-  async searchMovies({ searchTerm, page }) {
-    page = page ?? 1;
+  async searchMovies({ searchTerm, page = 1 }) {
     const response = await this.get('search/movie', {
       query: searchTerm,
       page,
       language: 'en-US',
       api_key,
     });
-    // console.log('response', response);
-    // return this.searchReducer(response.results);
-    return response.results.map((movie) => this.searchReducer(movie));
+    return response.results;
   }
 
-  searchReducer(searchResult) {
-    // console.log(searchResult.id);
-    return {
-      id: searchResult.id,
-      overview: searchResult.overview,
-      title: searchResult.title,
-    };
-    // return movie;
+  async getMovieInfo({ movie_id }) {
+    const response = await this.get(`/movie/${movie_id}`, {
+      api_key,
+    });
+    return response;
   }
 }
 
