@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -6,7 +8,7 @@ html, body {
   min-height: 100%;
   background: #003385;
   color: black;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Roboto
 }
 
 .center-screen {
@@ -41,7 +43,7 @@ html, body {
   padding: 10px;
   }
   
-  .movie-list {
+  .movie-container {
     grid-area: 2 / 1 / 6 / 3;
     border: 2px solid #003385;
     border-radius: 5px;
@@ -64,9 +66,23 @@ html, body {
   }
 
   .dashboard-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     grid-area: 1 / 1 / 2 / 6;
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
     padding: 10px; 
+  }
+
+  .movie-card-watched {
+    height: 30px;
+    width: 80%;
+    border: 1px solid #003385;
+  }
+  
+  .dash-logo {
+    height: 10%;
+    width: 10%;
   }

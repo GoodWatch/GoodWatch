@@ -9,7 +9,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../slices/usernameSlice';
 
-const LoginPage = () => {
+const SignupPage = () => {
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
@@ -26,15 +26,14 @@ const LoginPage = () => {
   const [status, setStatus] = useState(' ');
   const navigate = useNavigate();
 
-  const login = async (username, password) => {
+  const signup = async (username, password) => {
     try {
-      const response = await axios.post('/user', {
+      const response = await axios.post('/newUser', {
         username,
         password,
       });
       // setting user in store
       dispatch(setUser(username));
-
       navigate.push('/dashboard');
 
       // .then((userinfo) => {
@@ -86,7 +85,7 @@ const LoginPage = () => {
             <br />
             <TextField
               onChange={handlePasswordInput}
-              type='password'
+              type='text'
               color='primary'
               placeholder='password'
               InputProps={{
@@ -106,21 +105,7 @@ const LoginPage = () => {
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  login(username, password);
-                  setUsername('');
-                  setPassword('');
-                }}
-                variant='contained'
-                size='medium'
-                color='primary'
-                style={{ margin: '10px', fontWeight: 'bold' }}
-              >
-                Log in
-              </Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  login(username, password);
+                  signup(username, password);
                   setUsername('');
                   setPassword('');
                 }}
@@ -139,4 +124,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

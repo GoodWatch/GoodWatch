@@ -4,13 +4,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import Dashboard from './components/Dashboard';
 import LoginPage from './components/LoginPage';
+import SignupPage from './components/Signup';
 import './stylesheets/styles.css';
 import { Outlet, Link } from 'react-router-dom';
 
 const light = {
   palette: {
     primary: {
-      main: '#0046B6',
+      main: '#003385',
     },
     secondary: {
       main: '#fff',
@@ -24,10 +25,9 @@ const App = (props) => {
       {/* <CssBaseline /> */}
       <div className='router'>
         <main>
-          {/* <h1>GoodWatch</h1> */}
-          {/* <Link to='/login'> </Link> */}
           <LoginPage />
-          <Link to='/dashboard'> </Link>
+          <Link to='/dashboard'> this is a link</Link>
+          <Link to='/signup'></Link>
           <Outlet />
         </main>
       </div>

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 
 import Dashboard from './components/Dashboard';
 import Login from './components/LoginPage';
+import Signup from './components/Signup';
 
 const rootElement = document.getElementById('app');
 
@@ -17,6 +18,7 @@ render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
         <Route path='dashboard' element={<Dashboard />} />
       </Routes>
     </Provider>

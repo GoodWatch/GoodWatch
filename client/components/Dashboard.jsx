@@ -1,15 +1,27 @@
 import React from 'react';
 import SearchWindow from './SearchWindow';
-import MovieList from './MovieList';
+import MovieContainer from './MovieContainer';
 import ReviewModal from './ReviewModal';
+import GoodWatchLogo from '../Public/GoodWatchLogoBlack.png';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+  const name = useSelector((state) => {
+    // console.log('state is: ', state);
+    return state.username.username;
+  });
   return (
     <div className='dashboard'>
       <div className='dashboard-header'>
-        <h2>Dashboard Header</h2>
+        <span>
+          <h2>Hello {name}!</h2>
+          <div>
+            <img src={GoodWatchLogo} className='dash-logo' />
+          </div>
+        </span>
       </div>
-      <MovieList />
+      <MovieContainer />
       <SearchWindow />
       <ReviewModal />
     </div>
