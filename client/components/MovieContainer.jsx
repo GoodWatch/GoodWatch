@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Button } from '@mui/material';
 import MovieList from './MovieList';
 
 const MovieContainer = () => {
