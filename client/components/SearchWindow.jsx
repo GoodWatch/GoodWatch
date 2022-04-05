@@ -23,7 +23,7 @@ const SearchWindow = () => {
           name='searchTerm'
           size='small'
           value={searchTerm}
-          style={{ width: '50%' }}
+          style={{ width: '70%' }}
         ></TextField>
         <span>
           <Button
