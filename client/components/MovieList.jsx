@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import MovieCardWatched from './MovieCardWatched';
 
 const MovieList = (props) => {
+
+  const { review, rating } = props;
+
   const myMovies = useSelector((state) => {
     return state.myMovies.myMoviesList;
   });
@@ -17,6 +20,8 @@ const MovieList = (props) => {
           key={i}
           title={movie.original_title}
           poster={movie.poster_path}
+          review={review}
+          rating={rating}
         />
       );
     });

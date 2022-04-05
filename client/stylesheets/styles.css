@@ -45,11 +45,53 @@ html, body {
   
   .movie-container {
     grid-area: 2 / 1 / 6 / 3;
+    display: flex;
+    flex-direction: column;
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
   }
+  
+  .movie-list {
+    padding: 10px;
+  }
+
+  .review-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    margin-left: 15px;
+  }
+
+  .searched-result{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 100%;
+    width: 90%;
+    border: 2px solid #003385;
+  }
+
+  .button-search {
+    height: 40px;
+  }
+
+  .movie-card-watched {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    height: 100%;
+    width: 90%;
+    border: 2px solid #003385;
+    border-radius: 5px;
+  }
+
   .search-window { 
     grid-area: 2 / 3 / 5 / 6; 
     border: 2px solid #003385;
@@ -57,6 +99,12 @@ html, body {
     margin: 10px;
     padding: 10px;
   }
+
+  .movie-card-watched {
+    display: flex;
+    flex-direction: row;
+  }
+
   .review-modal { 
     grid-area: 5 / 3 / 6 / 6;
     display: flex;
@@ -64,9 +112,9 @@ html, body {
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
-    padding: 10px; 
+    padding: 8px; 
   }
-
+ 
   .dashboard-header {
     display: flex;
     flex-direction: row;
@@ -78,12 +126,8 @@ html, body {
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
-  }
-
-  .movie-card-watched {
-    height: 100%;
-    width: 80%;
-    border: 1px solid #003385;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   
   .dash-logo {
@@ -93,3 +137,4 @@ html, body {
   .review-button {
     width: 10em;
   }
+

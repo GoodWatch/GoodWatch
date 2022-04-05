@@ -10,11 +10,9 @@ const SearchWindow = () => {
     setSearchTerm(event.target.value);
   };
 
-  console.log('search term is: ', searchTerm);
-
   return (
     <div className='search-window'>
-      <h2>Search Window</h2>
+      <h2>Search Movies</h2>
       <form>
         <TextField
           onChange={handleSearchTermInput}

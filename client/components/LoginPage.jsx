@@ -2,12 +2,24 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import GoodWatchLogo from '../Public/GoodWatchFilled.png';
 import { InputAdornment } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../slices/usernameSlice';
+
+const light = {
+  palette: {
+    primary: {
+      main: '#003385',
+    },
+    secondary: {
+      main: '#fff',
+    },
+  },
+};
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -54,88 +66,90 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='center-screen'>
-      <div className='login-page'>
-        <img
-          src={GoodWatchLogo}
-          alt='goodwatch-logo'
-          className='goodwatch-logo'
-        />
-        <div>
-          <Link to='/dashboard'>Dashboard Back Door</Link>
-        </div>
-        <div className='login-form'>
-          <form>
-            <TextField
-              onChange={handleUsernameInput}
-              type='text'
-              color='primary'
-              placeholder='username'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <PersonIcon />
-                  </InputAdornment>
-                ),
-              }}
-              name='user'
-              size='small'
-              style={{ margin: '4px', width: '350px' }}
-              value={username}
-            ></TextField>
-            <br />
-            <TextField
-              onChange={handlePasswordInput}
-              type='password'
-              color='primary'
-              placeholder='password'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              }}
-              name='password'
-              size='small'
-              value={password}
-              style={{ margin: '4px', width: '350px' }}
-            ></TextField>
-            <br />
-            <span>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  login(username, password);
-                  setUsername('');
-                  setPassword('');
-                }}
-                variant='contained'
-                size='medium'
+    <ThemeProvider theme={createTheme(light)}>
+      <div className='center-screen'>
+        <div className='login-page'>
+          <img
+            src={GoodWatchLogo}
+            alt='goodwatch-logo'
+            className='goodwatch-logo'
+          />
+          <div>
+            <Link to='/dashboard'>Dashboard Back Door</Link>
+          </div>
+          <div className='login-form'>
+            <form>
+              <TextField
+                onChange={handleUsernameInput}
+                type='text'
                 color='primary'
-                style={{ margin: '10px', fontWeight: 'bold' }}
-              >
-                Log in
-              </Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  login(username, password);
-                  setUsername('');
-                  setPassword('');
+                placeholder='username'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
                 }}
-                variant='contained'
-                size='medium'
+                name='user'
+                size='small'
+                style={{ margin: '4px', width: '350px' }}
+                value={username}
+              ></TextField>
+              <br />
+              <TextField
+                onChange={handlePasswordInput}
+                type='password'
                 color='primary'
-                style={{ margin: '10px', fontWeight: 'bold' }}
-              >
-                Sign Up
-              </Button>
-            </span>
-          </form>
+                placeholder='password'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                name='password'
+                size='small'
+                value={password}
+                style={{ margin: '4px', width: '350px' }}
+              ></TextField>
+              <br />
+              <span>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    login(username, password);
+                    setUsername('');
+                    setPassword('');
+                  }}
+                  variant='contained'
+                  size='medium'
+                  color='primary'
+                  style={{ margin: '10px', fontWeight: 'bold' }}
+                >
+                  Log in
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    login(username, password);
+                    setUsername('');
+                    setPassword('');
+                  }}
+                  variant='contained'
+                  size='medium'
+                  color='primary'
+                  style={{ margin: '10px', fontWeight: 'bold' }}
+                >
+                  Sign Up
+                </Button>
+              </span>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 

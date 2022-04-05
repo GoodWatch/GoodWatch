@@ -16,6 +16,9 @@ const light = {
     secondary: {
       main: '#fff',
     },
+    success: {
+      main: '#000',
+    },
   },
 };
 
