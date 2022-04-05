@@ -1,8 +1,14 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import GoodWatchLogo from '../Public/GoodWatchFilled.png';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../slices/usernameSlice';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,8 +29,9 @@ const LoginPage = () => {
         username,
         password,
       });
-      // update state
-
+      // update store
+      // username = setUsername(username);
+      // dispatch(setUser(username));
       navigate.push('/dashboard');
 
       // .then((userinfo) => {
@@ -44,37 +51,64 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className='login-page'>
+      <img
+        src={GoodWatchLogo}
+        alt='goodwatch-logo'
+        className='goodwatch-logo'
+      />
       <div>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to='/dashboard'>Dashboard</Link>
       </div>
       <div>
         <form>
-          <input
+          <TextField
             onChange={handleUsernameInput}
-            type="text"
-            placeholder="username"
-            name="user"
+            type='text'
+            placeholder='username'
+            name='user'
+            size='small'
             value={username}
-          ></input>
-          <input
+          ></TextField>
+          <br />
+          <TextField
             onChange={handlePasswordInput}
-            type="text"
-            placeholder="password"
-            name="password"
+            type='text'
+            placeholder='password'
+            name='password'
+            size='small'
             value={password}
-          ></input>
+          ></TextField>
           <span>
-            <button
+            <br />
+            <Button
               onClick={(e) => {
                 e.preventDefault();
                 login(username, password);
                 setUsername('');
                 setPassword('');
               }}
+              variant='contained'
+              size='small'
+              color='secondary'
+              className='login-buttons'
             >
               Log in
-            </button>
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                login(username, password);
+                setUsername('');
+                setPassword('');
+              }}
+              variant='contained'
+              size='small'
+              color='secondary'
+              className='login-buttons'
+            >
+              Sign Up
+            </Button>
           </span>
         </form>
       </div>

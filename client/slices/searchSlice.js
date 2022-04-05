@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const showResults = createAsyncThunk(
-  '/searchResults', // <- need endpoint name from backend
+  '/searchResults', // <- unique string
   async () => {
     try {
       const response = await axios.post('/search/', {
@@ -23,7 +23,7 @@ export const showResults = createAsyncThunk(
 );
 
 const searchReducer = createSlice({
-  name: 'searches',
+  name: 'searchResults',
   initialState,
   reducers: {
     setSearchResults: (state, action) => {
