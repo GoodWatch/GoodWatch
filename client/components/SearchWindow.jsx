@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchList from './SearchList';
+import { searchThunk } from '../slices/searchSlice.js';
+import { useDispatch } from 'react-redux';
 
 const SearchWindow = () => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchTermInput = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  console.log('search term is: ', searchTerm);
+  // console.log('search term is: ', searchTerm);
 
   return (
     <div className='search-window'>
@@ -28,7 +31,7 @@ const SearchWindow = () => {
         <span>
           <Button
             onClick={(e) => {
-              e.preventDefault();
+              dispatch(searchThunk(searchTerm));
             }}
             variant='contained'
             size='medium'
