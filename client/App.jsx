@@ -10,7 +10,7 @@ import { Outlet, Link } from 'react-router-dom';
 const light = {
   palette: {
     primary: {
-      main: '#1061E4',
+      main: '#0046B6',
     },
     secondary: {
       main: '#fff',

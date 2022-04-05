@@ -109,9 +109,8 @@ const LoginPage = () => {
                   setPassword('');
                 }}
                 variant='contained'
-                size='small'
-                color='secondary'
-                className='login-buttons'
+                size='medium'
+                color='primary'
                 style={{ margin: '10px' }}
               >
                 Log in
@@ -124,9 +123,8 @@ const LoginPage = () => {
                   setPassword('');
                 }}
                 variant='contained'
-                size='small'
-                color='secondary'
-                className='login-buttons'
+                size='medium'
+                color='primary'
                 style={{ margin: '10px' }}
               >
                 Sign Up
