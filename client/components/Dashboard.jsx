@@ -2,9 +2,22 @@ import React from 'react';
 import SearchWindow from './SearchWindow';
 import MovieContainer from './MovieContainer';
 import ReviewModal from './ReviewModal';
-import GoodWatchLogo from '../Public/GoodWatchLogoBlack.png';
+import GoodWatchLogo from '../Public/GoodWatchLogoWhiteSmall.png';
 import { useSelector } from 'react-redux';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+
+const light = {
+  palette: {
+    primary: {
+      main: '#003385',
+    },
+    secondary: {
+      main: '#fff',
+    },
+  },
+};
 
 const Dashboard = () => {
   const name = useSelector((state) => {
@@ -12,19 +25,25 @@ const Dashboard = () => {
     return state.username.username;
   });
   return (
-    <div className='dashboard'>
-      <div className='dashboard-header'>
-        <span>
+    <ThemeProvider theme={createTheme(light)}>
+      <div className='dashboard'>
+        <div className='dashboard-header'>
           <h2>Hello {name}!</h2>
-          <div>
-            <img src={GoodWatchLogo} className='dash-logo' />
-          </div>
-        </span>
+          <img src={GoodWatchLogo} className='dash-logo' />
+          <Button
+            size='large'
+            variant='contained'
+            color='secondary'
+            style={{ fontWeight: 'bolder' }}
+          >
+            Sign Out
+          </Button>
+        </div>
+        <MovieContainer />
+        <SearchWindow />
+        <ReviewModal />
       </div>
-      <MovieContainer />
-      <SearchWindow />
-      <ReviewModal />
-    </div>
+    </ThemeProvider>
   );
 };
 

@@ -39,7 +39,7 @@ html, body {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   background-color: #fff;
-  min-height: 98vh;
+  max-height: 98vh;
   padding: 10px;
   }
   
@@ -59,6 +59,8 @@ html, body {
   }
   .review-modal { 
     grid-area: 5 / 3 / 6 / 6;
+    display: flex;
+    flex-direction: column;
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
@@ -68,21 +70,26 @@ html, body {
   .dashboard-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    color: white;
+    background-color: #003385;
+    justify-content: space-around;
+    align-items: center;
     grid-area: 1 / 1 / 2 / 6;
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
-    padding: 10px; 
   }
 
   .movie-card-watched {
-    height: 30px;
+    height: 100%;
     width: 80%;
     border: 1px solid #003385;
   }
   
   .dash-logo {
-    height: 10%;
-    width: 10%;
+    height: 9em;
+  }
+
+  .review-button {
+    width: 10em;
   }

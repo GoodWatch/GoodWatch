@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
+import { Button } from '@mui/material';
 import MovieCardWatched from './MovieCardWatched';
+import MovieList from './MovieList';
 
 const MovieContainer = () => {
   const [watched, setWatchedState] = useState(true);
@@ -16,24 +18,29 @@ const MovieContainer = () => {
       <div>
         <h2>My Movies</h2>
         <span>
-          <button
+          <Button
+            variant='contained'
+            color='primary'
             onClick={(e) => {
               e.preventDefault();
               if (!watched) handleClick();
             }}
           >
             Watched
-          </button>
-          <button
+          </Button>
+          <Button
+            variant='contained'
+            color='primary'
             onClick={(e) => {
               e.preventDefault();
               if (watched) handleClick();
             }}
           >
             To Watch
-          </button>
+          </Button>
         </span>
       </div>
+      <MovieList watched={watched} />
     </div>
   );
 };

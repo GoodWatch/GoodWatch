@@ -1,11 +1,11 @@
 import React from 'react';
 
-const MovieCardWatched = () => {
+const MovieCardWatched = (props) => {
+  const poster = 'https://image.tmdb.org/t/p/w92' + `${props.poster}`;
   return (
     <div className='movie-card-watched'>
-      <h4>Movie Card</h4>
-      <h3>1. Barbie </h3>
-      <h3>2. Big Fish </h3>
+      <img className='movie-card' src={poster} />
+      <span>{props.title}</span>
     </div>
   );
 };
