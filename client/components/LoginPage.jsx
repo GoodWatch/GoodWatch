@@ -60,6 +60,7 @@ const LoginPage = () => {
           <div className='login-form'>
             <form>
               <TextField
+                role = "input_text_box"
                 onChange={handleUsernameInput}
                 type='text'
                 color='primary'
@@ -78,6 +79,7 @@ const LoginPage = () => {
               ></TextField>
               <br />
               <TextField
+                role = "input_text_box"
                 onChange={handlePasswordInput}
                 type='password'
                 color='primary'

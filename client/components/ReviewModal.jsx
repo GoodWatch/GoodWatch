@@ -13,7 +13,7 @@ const ReviewModal = () => {
   };
 
   return (
-    <div className='review-modal'>
+    <div className='review-modal' role='review-modal'>
       <h2>Recommended Movies</h2>
       <form className=''>
         {/* <span>
