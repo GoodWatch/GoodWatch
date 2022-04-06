@@ -8,31 +8,34 @@ import { useDispatch } from 'react-redux';
 const SearchWindow = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchField, setSearchField] = useState('');
 
-  const handleSearchTermInput = (event) => {
-    setSearchTerm(event.target.value);
+  const handleSearchFieldInput = (event) => {
+    setSearchField(event.target.value);
   };
 
-  // console.log('search term is: ', searchTerm);
+  const handleSearchTerm = (searchTerm) => {
+    if(searchField.trim().length) {
+      setSearchTerm(searchField);
+      dispatch(searchThunk(searchField));
+    }
+  };
 
   return (
     <div className='search-window'>
-      <h2>Search Movies</h2>
       <form>
         <TextField
-          onChange={handleSearchTermInput}
+          onChange={handleSearchFieldInput}
           type='text'
           placeholder='Search Movie'
-          name='searchTerm'
+          name='searchField'
           size='small'
-          value={searchTerm}
+          value={searchField}
           style={{ width: '70%' }}
         ></TextField>
         <span>
           <Button
-            onClick={(e) => {
-              dispatch(searchThunk(searchTerm));
-            }}
+            onClick={handleSearchTerm}
             variant='contained'
             size='medium'
             color='primary'
@@ -42,8 +45,10 @@ const SearchWindow = () => {
           </Button>
         </span>
       </form>
-      <div className='search-results'>
+      <div>
         {searchTerm ? `Showing results for ${searchTerm}:` : ''}
+      </div>
+      <div className='search-results'>
         {searchTerm && <SearchList />}
       </div>
     </div>

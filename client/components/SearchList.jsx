@@ -8,17 +8,18 @@ const Search = (props) => {
   });
 
   const searchedMovieList = [];
-
+  // console.log('searchResults', searchResults);
   searchResults.forEach((movie, i) => {
     searchedMovieList.push(
-      <MovieCardSearched 
+      <MovieCardSearched
         key={i}
-        title={movie.original_title} 
+        movie={movie}
+        title={movie.original_title}
         poster={movie.poster_path}
       />
     );
   });
-  return <div >{searchedMovieList}</div>;
-}
+  return <div className='search-list'>{searchedMovieList}</div>;
+};
 
 export default Search;
