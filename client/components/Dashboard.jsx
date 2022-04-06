@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { getMovies } from '../slices/myMoviesSlice';
+import { getMovies, logout } from '../slices/myMoviesSlice';
+import { useNavigate } from 'react-router-dom';
 
 const light = {
   palette: {
@@ -25,16 +26,20 @@ const light = {
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const name = useSelector((state) => {
-    // console.log('state is: ', state);
-    return state.username.username;
-  });
+  const name = useSelector((state) => state.myMovies.username);
   const myMoviesList = useSelector((state) => state.myMovies.myMoviesList);
+  const success = useSelector((state)=>state.myMovies.success)
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!myMoviesList.length) {
       dispatch(getMovies());
     }
   }, []);
+
+  useEffect(() => {
+    if (!success) navigate('/');
+  }, [success]);
 
   return (
     <ThemeProvider theme={createTheme(light)}>
@@ -47,6 +52,7 @@ const Dashboard = () => {
             variant='contained'
             color='secondary'
             style={{ fontWeight: 'bolder' }}
+            onClick={()=>dispatch(logout())}
           >
             Sign Out
           </Button>

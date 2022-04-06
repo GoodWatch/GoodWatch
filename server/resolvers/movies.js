@@ -23,7 +23,16 @@ module.exports = {
           dataSources.MovieAPI.getMovieInfo({ movie_id })
         );
         const movieInfoArr = await Promise.all(promiseArr);
-        return movie.rows.map((cur, i) => ({ ...cur, ...movieInfoArr[i] }));
+        const movieInforArrComplete = movie.rows.map((cur, i) => ({
+          ...cur,
+          ...movieInfoArr[i],
+        }));
+        return {
+          success: true,
+          message: 'Movies collected',
+          username: username,
+          data: movieInforArrComplete,
+        };
       } catch (error) {
         throw new Error(error);
       }

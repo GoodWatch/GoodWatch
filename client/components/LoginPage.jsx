@@ -8,7 +8,6 @@ import { InputAdornment } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../slices/usernameSlice';
 import { login } from '../slices/myMoviesSlice';
 
 

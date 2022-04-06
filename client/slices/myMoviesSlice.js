@@ -26,6 +26,7 @@ export const login = createAsyncThunk(
             login(username: $username, password: $password) {
               success
               message
+              username
               data {
                 adult
                 id
@@ -63,6 +64,32 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  '/logout', // <- unique string
+  async () => {
+
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          query Query {
+            logout
+          }
+          `,
+        },
+      });
+      return response.data.data.logout;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const getMovies = createAsyncThunk(
   '/getMovies', // <- unique string
   async () => {
@@ -77,28 +104,33 @@ export const getMovies = createAsyncThunk(
           query: `
           query GetMovies {
             getMovies {
-              adult
-              id
-              original_language
-              original_title
-              overview
-              popularity
-              poster_path
-              release_date
-              title
-              video
-              vote_average
-              vote_count
-              backdrop_path
-              homepage
-              imdb_id
-              revenue
-              runtime
-              status
-              tagline
-              rating
-              comment
-              watched
+              success
+              message
+              username
+              data {
+                adult
+                id
+                original_language
+                original_title
+                overview
+                popularity
+                poster_path
+                release_date
+                title
+                video
+                vote_average
+                vote_count
+                backdrop_path
+                homepage
+                imdb_id
+                revenue
+                runtime
+                status
+                tagline
+                rating
+                comment
+                watched
+              }
             }
           }
           `,
@@ -132,16 +164,24 @@ export const myMoviesSlice = createSlice({
           state.myMoviesList = action.payload.data;
           state.success = action.payload.success;
           state.message = action.payload.message;
+          state.username = action.payload.username;
         }
       })
       .addCase(getMovies.fulfilled, (state, action) => {
         // TODO: SET USERNAME
-        // if (action.payload) {
-        console.log(action.payload);
-        state.myMoviesList = action.payload;
-        // state.success = action.payload.success;
-        // state.message = action.payload.message;
-        // }
+        if (action.payload.success) {
+          state.myMoviesList = action.payload.data;
+          state.success = action.payload.success;
+          state.message = action.payload.message;
+          state.username = action.payload.username;
+        }
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        // TODO: SET USERNAME
+        state.myMoviesList = [];
+        state.success = false;
+        state.message = '';
+        state.username = '';
       });
   },
 });
