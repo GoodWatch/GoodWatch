@@ -140,13 +140,21 @@ module.exports = {
     },
     async deleteMovie(_, { movie_id }, { username }) {
       try {
-        console.log(typeof movie_id);
         const query = {
-          text: 'DELETE FROM Users_Movies WHERE username=$1 AND movie_id=$2',
+          text: 'DELETE FROM Users_Movies WHERE username=$1 AND movie_id=$2 RETURNING *',
           values: [username, movie_id],
         };
-        await pool.query(query);
-        return 'Movie deleted';
+        const movie = await pool.query(query);
+        if (movie.rows.length) {
+          return {
+            success: true,
+            message: 'Movie deleted',
+          };
+        }
+        return {
+          success: false,
+          message: 'Movie not in library',
+        };
       } catch (error) {
         throw new Error(error);
       }
