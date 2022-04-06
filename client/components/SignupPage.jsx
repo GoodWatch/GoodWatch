@@ -8,7 +8,8 @@ import { InputAdornment } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../slices/myMoviesSlice';
+import { signup } from '../slices/myMoviesSlice';
+import EmailIcon from '@mui/icons-material/Email';
 
 const light = {
   palette: {
@@ -21,13 +22,14 @@ const light = {
   },
 };
 
-const LoginPage = () => {
+const SignupPage = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.myMovies.success);
   const message = useSelector((state) => state.myMovies.message);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleUsernameInput = (event) => {
     setUsername(event.target.value);
@@ -35,6 +37,10 @@ const LoginPage = () => {
 
   const handlePasswordInput = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleEmailInput = (event) => {
+    setEmail(event.target.value);
   };
 
   const [status, setStatus] = useState(' ');
@@ -58,12 +64,15 @@ const LoginPage = () => {
             <Link to='/dashboard'>Dashboard Back Door</Link>
           </div> */}
           <div className='login-form'>
-            <form onSubmit={(e)=> {
-              e.preventDefault();
-              dispatch(login({ username, password }));
-              setUsername('');
-              setPassword('');
-            }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                dispatch(signup({ username, password, email }));
+                setUsername('');
+                setPassword('');
+                setEmail('');
+              }}
+            >
               <TextField
                 onChange={handleUsernameInput}
                 type='text'
@@ -80,8 +89,7 @@ const LoginPage = () => {
                 size='small'
                 style={{ margin: '20px', width: '350px' }}
                 value={username}
-              ></TextField>
-              <br />
+              />
               <TextField
                 onChange={handlePasswordInput}
                 type='password'
@@ -98,9 +106,36 @@ const LoginPage = () => {
                 size='small'
                 value={password}
                 style={{ margin: '20px', width: '350px' }}
-              ></TextField>
-              <br />
+              />
+              <TextField
+                onChange={handleEmailInput}
+                type='email'
+                color='primary'
+                placeholder='email'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                name='email'
+                size='small'
+                value={email}
+                style={{ margin: '20px', width: '350px' }}
+              />
               <span>
+                <br />
+                <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+                  <Button
+                    variant='contained'
+                    size='medium'
+                    color='primary'
+                    style={{ margin: '10px', fontWeight: 'bold' }}
+                  >
+                    Log in
+                  </Button>
+                </Link>
                 <Button
                   type='submit'
                   variant='contained'
@@ -108,21 +143,8 @@ const LoginPage = () => {
                   color='primary'
                   style={{ margin: '10px', fontWeight: 'bold' }}
                 >
-                  Log in
+                  Sign up
                 </Button>
-                <Link
-                  to='/signup'
-                  style={{ textDecoration: 'none', color: 'white' }}
-                >
-                  <Button
-                    variant='contained'
-                    size='medium'
-                    color='primary'
-                    style={{ margin: '10px', fontWeight: 'bold' }}
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
               </span>
             </form>
           </div>
@@ -132,4 +154,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

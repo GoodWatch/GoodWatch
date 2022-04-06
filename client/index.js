@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import MoviePage from './components/MoviePage.jsx';
 import Dashboard from './components/Dashboard';
 import Login from './components/LoginPage';
+import Signup from './components/SignupPage';
 
 const rootElement = document.getElementById('app');
 
@@ -18,7 +19,7 @@ render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='login' element={<Login />} />
-        {/* <Route path='signup' element={<Signup />} /> */}
+        <Route path='signup' element={<Signup />} />
         <Route path='dashboard' element={<Dashboard />} />
         <Route path='movie/:movieId' element={<MoviePage />} />
       </Routes>

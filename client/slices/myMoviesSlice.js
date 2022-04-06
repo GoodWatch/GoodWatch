@@ -12,6 +12,43 @@ const initialState = {
   pageNum: 1,
 };
 
+export const signup = createAsyncThunk(
+  '/signup', // <- unique string
+  async ({ username, password, email }) => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          mutation SignUp($username: String!, $password: String!, $email: String!) {
+            signUp(username: $username, password: $password, email: $email) {
+              success
+              message
+              username
+              data {
+                id
+              }
+            }
+          }
+          `,
+          variables: {
+            username,
+            password,
+            email,
+          },
+        },
+      });
+      return response.data.data.signUp;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const login = createAsyncThunk(
   '/login', // <- unique string
   async ({ username, password }) => {
@@ -346,6 +383,15 @@ export const myMoviesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.myMoviesList = action.payload.data;
+          state.success = action.payload.success;
+          state.message = action.payload.message;
+          state.username = action.payload.username;
+        }
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        console.log(action.payload);
         if (action.payload.success) {
           state.myMoviesList = action.payload.data;
           state.success = action.payload.success;
