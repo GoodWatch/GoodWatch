@@ -45,10 +45,11 @@ const RecommendMovies = () => {
         }}
       >
         {recommendedMovies.map((cur,i) => (
-          <Box key={i}>
+          <Box key={i} >
             <MoviePosterImg
               src={`https://image.tmdb.org/t/p/w185${cur.poster_path}`}
               movieId={cur.id}
+              id="recommended-pic"
             />
             <Box
               sx={{
