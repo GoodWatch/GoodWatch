@@ -199,6 +199,35 @@ export const addMovie = createAsyncThunk(
   }
 );
 
+export const deleteMovie = createAsyncThunk(
+  '/deleteMovie',
+  async ({ movieId }) => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query:`
+          mutation DeleteMovie($movieId: Int!) {
+            deleteMovie(movie_id: $movieId) {
+
+            }
+          }
+          `,
+          variables: { movieId }
+        },
+      });
+      return response.data.data.deleteMovie;
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const myMoviesSlice = createSlice({
   name: 'myMovies',
   initialState,
@@ -208,11 +237,11 @@ export const myMoviesSlice = createSlice({
     //   movie.watched = true;
     //   state.myMoviesList.push(movie);
     // },
-    deleteMovie: (state, action) => {
-      state.myMoviesList = state.myMoviesList.filter(
-        (movie) => movie != action.payload
-      );
-    },
+    // deleteMovie: (state, action) => {
+    //   state.myMoviesList = state.myMoviesList.filter(
+    //     (movie) => movie != action.payload
+    //   );
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -244,10 +273,15 @@ export const myMoviesSlice = createSlice({
         if (action.payload.success) {
           state.myMoviesList.unshift(action.payload.data[0]);
         } else console.log(action.payload.message);
+      })
+      .addCase(deleteMovie.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.myMoviesList = state.myMoviesList.filter(movie => movie !== action.payload.data[0]);
+        } else console.log(action.payload.message);
       });
   },
 });
 
-export const { deleteMovie } = myMoviesSlice.actions;
+// export const { deleteMovie } = myMoviesSlice.actions;
 
 export default myMoviesSlice.reducer;
