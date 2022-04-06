@@ -6,17 +6,18 @@ import Tooltip from '@mui/material/Tooltip';
 import { Button } from '@mui/material';
 import { addMovie } from '../slices/myMoviesSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const searchResults = (props) => {
+  const navigate = useNavigate();
   const poster = 'https://image.tmdb.org/t/p/w92' + `${props.poster}`;
-
   const dispatch = useDispatch();
   const handleAddMovie = () => {
     dispatch(addMovie(props.movie));
   };
   return (
     <div className='movie-result'>
-      <img className='movie-card' src={poster} />
+      <img onClick={() => navigate(`/movie/${props.movieId}`)} className='movie-card-pic' src={poster} />
       <span>{props.title}</span>
       <div className='review-buttons'>
         <Tooltip title='To Watch' placement='right-start'>

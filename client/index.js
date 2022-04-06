@@ -5,6 +5,7 @@ import App from './App';
 import { store } from './store';
 import { Provider } from 'react-redux';
 
+import MoviePage from './components/MoviePage.jsx';
 import Dashboard from './components/Dashboard';
 import Login from './components/LoginPage';
 
@@ -19,6 +20,7 @@ render(
         <Route path='login' element={<Login />} />
         {/* <Route path='signup' element={<Signup />} /> */}
         <Route path='dashboard' element={<Dashboard />} />
+        <Route path='movie/:movieId' element={<MoviePage />} />
       </Routes>
     </Provider>
   </BrowserRouter>,

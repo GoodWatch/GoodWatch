@@ -22,6 +22,7 @@ const MovieList = (props) => {
           poster={movie.poster_path}
           review={review}
           rating={rating}
+          movieId={movie.id}
         />
       );
     });

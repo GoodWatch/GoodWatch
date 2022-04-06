@@ -124,6 +124,7 @@ html, body {
 
   .movie-card-pic {
     height: 8em;
+    cursor: pointer;
   }
 
   .review-modal { 
