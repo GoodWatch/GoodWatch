@@ -20,8 +20,8 @@ const MovieList = (props) => {
           key={i}
           title={movie.original_title}
           poster={movie.poster_path}
-          review={review}
-          rating={rating}
+          review={movie.review} // added movie.
+          rating={movie.rating} // added movie.
           movieId={movie.id}
         />
       );

@@ -239,6 +239,59 @@ export const addMovie = createAsyncThunk(
   }
 );
 
+export const addReview = createAsyncThunk(
+  '/addReview', // <- unique string
+  async ({ movieId, comment, rating }) => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          mutation Mutation($movieId: Int!, $rating: Int, $comment: String) {
+            editMovie(movie_id: $movieId, rating: $rating, comment: $comment) {
+              success
+              message
+              data {
+                adult
+                id
+                original_language
+                original_title
+                overview
+                popularity
+                poster_path
+                release_date
+                title
+                video
+                vote_average
+                vote_count
+                backdrop_path
+                homepage
+                imdb_id
+                revenue
+                runtime
+                status
+                tagline
+                rating
+                comment
+                watched
+              }
+            }
+          }
+          `,
+          variables: { movieId, comment, rating },
+        },
+      });
+      return response.data.data.addReview;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const myMoviesSlice = createSlice({
   name: 'myMovies',
   initialState,

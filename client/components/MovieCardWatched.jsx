@@ -12,17 +12,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { addReview } from '../slices/myMoviesSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const MovieCardWatched = (props) => {
   const navigate = useNavigate();
   const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [review, setReview] = useState('');
+  const [comment, setcomment] = useState('');
   const [rating, setRating] = useState(2);
 
   const handleReviewInput = (event) => {
-    setReview(event.target.value);
+    setcomment(event.target.value);
   };
 
   const handleClickOpen = () => {
@@ -40,7 +43,18 @@ const MovieCardWatched = (props) => {
         className='movie-card-pic'
         src={poster}
       />
-      {props.title}
+      <div className='movie-card-watched-title'>
+        {props.title}
+        <br />
+        <Rating
+          name='size-small'
+          defaultValue={props.rating}
+          size='small'
+          readOnly
+        />
+        <br />
+        {props.review}
+      </div>
       <Stack direction='row' spacing={1}>
         <Tooltip title='Write Review' placement='right'>
           <IconButton color='primary' onClick={handleClickOpen}>
@@ -72,31 +86,30 @@ const MovieCardWatched = (props) => {
               name='review'
               rows={7}
               size='small'
-              value={review}
+              value={comment}
               style={{ width: '100%' }}
               multiline
             />
-            <span>
-              {/* <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                variant='contained'
-                size='medium'
-                color='primary'
-                className='review-button'
-                style={{ margin: '2px', fontWeight: 'bold', width: '5%' }}
-              >
-                <ReviewsIcon />
-              </Button> */}
-            </span>
           </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant='contained'>
             Cancel
           </Button>
-          <Button onClick={handleClose} variant='contained'>
+          <Button
+            onClick={() => {
+              dispatch(
+                addReview({
+                  movieId: props.movieId,
+                  comment: comment,
+                  rating: rating,
+                })
+              );
+              console.log('comment', typeof comment);
+              setOpen(false);
+            }}
+            variant='contained'
+          >
             Submit
           </Button>
         </DialogActions>
