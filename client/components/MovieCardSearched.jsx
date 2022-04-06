@@ -20,8 +20,12 @@ const searchResults = (props) => {
   };
   return (
     <div className='movie-result'>
-      <MoviePosterImg src={poster} movieId={props.movieId}/>
-      <span>{props.title}</span>
+      <MoviePosterImg src={poster} movieId={props.movieId} />
+      <span>
+        <h3>
+          {props.title} ({trimYear(props.year)})
+        </h3>
+      </span>
       <div className='review-buttons'>
         <Tooltip title='To Watch' placement='right-start'>
           <IconButton
