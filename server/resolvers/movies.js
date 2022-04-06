@@ -65,19 +65,21 @@ module.exports = {
       };
       const movies = await pool.query(query);
       // console.log(movies.rows);
-      const promiseArr = movies.rows.map(({ movie_id }) =>
-        dataSources.MovieAPI.getMovieRecs({ movie_id })
-      );
-      const movieInfoArr = await Promise.all(promiseArr);
-      const recMovies = movieInfoArr.flat();
-      const indices = [];
-      while (indices.length < 5) {
-        const index = Math.floor(recMovies.length * Math.random());
-        if (!indices.includes(index)) {
-          indices.push(index);
+      if(movies.rows.length >= 1) {
+        const promiseArr = movies.rows.map(({ movie_id }) =>
+          dataSources.MovieAPI.getMovieRecs({ movie_id })
+        );
+        const movieInfoArr = await Promise.all(promiseArr);
+        const recMovies = movieInfoArr.flat();
+        const indices = [];
+        while (indices.length < 5) {
+          const index = Math.floor(recMovies.length * Math.random());
+          if (!indices.includes(index)) {
+            indices.push(index);
+          }
         }
-      }
-      return indices.map((s) => recMovies[s]);
+        return indices.map((s) => recMovies[s]);
+      } else return [];
     },
   },
 
