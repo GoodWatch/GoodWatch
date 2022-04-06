@@ -17,7 +17,7 @@ const SearchWindow = () => {
 
   return (
     <div className='search-window'>
-      <h2>Search Window</h2>
+      <h2>Search Movies</h2>
       <form>
         <TextField
           onChange={handleSearchTermInput}

@@ -1,39 +1,51 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MovieList from './MovieList';
 
 const MovieContainer = () => {
   const [watched, setWatchedState] = useState(true);
+
+  const [alignment, setAlignment] = useState('Watched');
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
 
   const handleClick = () => {
     setWatchedState((cur) => !cur);
   };
   return (
     <div className='movie-container'>
-      <div>
-        <h2>My Movies</h2>
+      <h2>My Movies</h2>
+      <div className='movie-list-buttons'>
         <span>
-          <Button
-            variant='contained'
+          <ToggleButtonGroup
             color='primary'
-            onClick={(e) => {
-              e.preventDefault();
-              if (!watched) handleClick();
-            }}
+            value={alignment}
+            exclusive
+            onChange={handleChange}
           >
-            Watched
-          </Button>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={(e) => {
-              e.preventDefault();
-              if (watched) handleClick();
-            }}
-          >
-            To Watch
-          </Button>
+            <ToggleButton
+              sx={{ fontWeight: 'bolder' }}
+              value='watched'
+              onClick={() => {
+                if (!watched) handleClick();
+              }}
+            >
+              Watched
+            </ToggleButton>
+            <ToggleButton
+              sx={{ fontWeight: 'bolder' }}
+              value='to-watch'
+              onClick={() => {
+                if (watched) handleClick();
+              }}
+            >
+              To Watch
+            </ToggleButton>
+          </ToggleButtonGroup>
         </span>
       </div>
       <MovieList watched={watched} />

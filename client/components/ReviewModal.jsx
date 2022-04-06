@@ -15,11 +15,12 @@ const ReviewModal = () => {
   return (
     <div className='review-modal'>
       <h2>Write a review</h2>
-      <form>
+      <form className='review-form'>
         <span>
           <Typography component='legend'>Rating</Typography>
           <Rating
             name='simple-controlled'
+            size='large'
             value={rating}
             onChange={(event, newValue) => {
               setRating(newValue);

@@ -2,15 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import MovieCardSearched from './MovieCardSearched';
 
-const SearchList = (props) => {
+const Search = (props) => {
   const searchResults = useSelector((state) => {
     return state.searchResults.displayResults;
   });
 
-  const feedItems = [];
+  const searchedMovieList = [];
 
   searchResults.forEach((movie, i) => {
-    feedItems.push(
+    searchedMovieList.push(
       <MovieCardSearched 
         key={i}
         title={movie.original_title} 
@@ -18,7 +18,7 @@ const SearchList = (props) => {
       />
     );
   });
-  return <div >{feedItems}</div>;
+  return <div >{searchedMovieList}</div>;
 }
 
-export default SearchList;
+export default Search;
