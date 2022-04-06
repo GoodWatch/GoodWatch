@@ -11,7 +11,7 @@ import MoviePosterImg from './MoviePosterImg';
 
 const searchResults = (props) => {
   const navigate = useNavigate();
-  const poster = 'https://image.tmdb.org/t/p/w92' + `${props.poster}`;
+  const poster = 'https://image.tmdb.org/t/p/w185' + `${props.poster}`;
   const dispatch = useDispatch();
   const handleAddMovie = () => {
     dispatch(addMovie(props.movie));

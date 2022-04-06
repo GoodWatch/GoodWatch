@@ -47,7 +47,7 @@ const RecommendMovies = () => {
         {recommendedMovies.map((cur,i) => (
           <Box key={i}>
             <MoviePosterImg
-              src={`https://image.tmdb.org/t/p/w92${cur.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w185${cur.poster_path}`}
               movieId={cur.id}
             />
             <Box
@@ -55,7 +55,7 @@ const RecommendMovies = () => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                transform: 'translate(0,-40px);',
+                // transform: 'translate(0,-40px);',
               }}
             >
               <Tooltip title='To Watch' placement='top'>

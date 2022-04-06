@@ -22,8 +22,8 @@ const MovieList = (props) => {
           title={movie.original_title}
           year={movie.release_date}
           poster={movie.poster_path}
-          review={review}
-          rating={rating}
+          review={movie.comment}
+          rating={movie.rating}
           movieId={movie.id}
         />
       );

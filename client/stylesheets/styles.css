@@ -58,8 +58,13 @@ html, body {
   .movie-list {
     padding: 10px;
     position: relative;
-    max-height: 90%;
+    min-height: 85%;
+    max-height: 95%;
     overflow: auto;
+  }
+
+  .movie-card-watched-title {
+    text-align: center;
   }
 
   .review-buttons {
@@ -105,6 +110,7 @@ html, body {
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
+    min-height: 100%;
   }
 
   .search-results {
@@ -113,9 +119,10 @@ html, body {
     overflow: auto;
   }
 
-  .search-list {
+  /* .search-list {
+    min-height: 85%;
     max-height: 95%;
-  }
+  } */
 
   .movie-card-watched {
     display: flex;
