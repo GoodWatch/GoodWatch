@@ -44,17 +44,18 @@ html, body {
   max-height: 98vh;
   padding: 10px;
 }
-  
+
   .movie-container {
     grid-area: 2 / 1 / 6 / 3;
     display: flex;
     flex-direction: column;
-    border: 2px solid #003385;
+    /* border: 2px solid #003385; */
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
   }
-  
+
   .movie-list {
     padding: 10px;
     position: relative;
@@ -86,7 +87,11 @@ html, body {
     padding-bottom: 10px;
     height: 100%;
     width: 90%;
-    border: 2px solid #003385;
+    /* border: 2px solid #003385; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  .movie-result:hover {
+    transform: scale(1.05);
   }
 
   .button-search {
@@ -103,19 +108,26 @@ html, body {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
+    margin: 10px;
     height: 100%;
     width: 90%;
-    border: 2px solid #003385;
+    /* border: 2px solid #003385; */
     border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
+  .movie-card-watched:hover {
+      transform: scale(1.05);
+    }
 
-  .search-window { 
-    grid-area: 2 / 3 / 5 / 6; 
-    border: 2px solid #003385;
+
+  .search-window {
+    grid-area: 2 / 3 / 5 / 6;
+    /* border: 2px solid #003385; */
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
     min-height: 100%;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
   }
 
   .search-results {
@@ -152,15 +164,16 @@ html, body {
     border-radius: .5rem;
   }
 
-  .review-modal { 
+  .review-modal {
     grid-area: 5 / 3 / 6 / 6;
     display: flex;
     flex-direction: column;
-    border: 2px solid #003385;
+    /* border: 2px solid #003385; */
     border-radius: 5px;
-    margin: 20px 10px 10px 10px;
-    padding: 20px;
-    min-height: 20vh; 
+    margin: 10px;
+    padding: 12px;
+    min-height: 20vh;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
   }
 
   .review-form{
@@ -186,7 +199,7 @@ html, body {
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  
+
   .dash-logo {
     height:6em;
   }
