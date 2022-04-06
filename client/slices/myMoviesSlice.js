@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, current } from '@reduxjs/toolkit';
 import 'regenerator-runtime/runtime';
 import axios from 'axios';
 
@@ -269,9 +269,9 @@ export const deleteMovie = createAsyncThunk(
   }
 );
 
-export const addReview = createAsyncThunk(
-  '/addReview', // <- unique string
-  async ({ movieId, comment, rating }) => {
+export const editMovie = createAsyncThunk(
+  '/editMovie', // <- unique string
+  async ({ movieId, comment, rating, watched }) => {
     try {
       const response = await axios({
         url: '/graphql',
@@ -281,8 +281,8 @@ export const addReview = createAsyncThunk(
         },
         data: {
           query: `
-          mutation Mutation($movieId: Int!, $rating: Int, $comment: String) {
-            editMovie(movie_id: $movieId, rating: $rating, comment: $comment) {
+          mutation Mutation($movieId: Int!, $rating: Int, $comment: String, $watched: Boolean) {
+            editMovie(movie_id: $movieId, rating: $rating, comment: $comment, watched: $watched) {
               success
               message
               data {
@@ -312,10 +312,16 @@ export const addReview = createAsyncThunk(
             }
           }
           `,
-          variables: { movieId, comment, rating },
+          variables: { movieId, comment, rating, watched },
         },
       });
-      return response.data.data.addReview;
+      console.log('try block', response.data.data);
+      response.data.data.editMovie.comment = comment;
+      response.data.data.editMovie.movieId = movieId;
+      response.data.data.editMovie.rating = rating;
+      // response.data.data.editMovie.watched = watched;
+      // console.log('try block response', rating);
+      return response.data.data.editMovie;
     } catch (e) {
       console.log(e);
     }
@@ -369,11 +375,21 @@ export const myMoviesSlice = createSlice({
       })
       .addCase(deleteMovie.fulfilled, (state, action) => {
         if (action.payload.success) {
-          console.log('action.payload', action.payload);
           state.myMoviesList = state.myMoviesList.filter(
             (movie) => movie.id !== action.payload.movieId
           );
           // state.myMoviesList.splice(state.myMoviesList.findIndex((movie) => movie.id === action.payload.movieId), 1);
+        } else console.log(action.payload.message);
+      })
+      .addCase(editMovie.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.myMoviesList = state.myMoviesList.map((movie) => {
+            if (movie.id === action.payload.movieId) {
+              movie.rating = action.payload.rating;
+              movie.comment = action.payload.comment;
+            }
+            return movie;
+          });
         } else console.log(action.payload.message);
       })
       .addCase(getMovieRecs.fulfilled, (state, action) => {

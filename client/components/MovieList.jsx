@@ -4,10 +4,15 @@ import MovieCardWatched from './MovieCardWatched';
 
 const MovieList = (props) => {
   const myMovies = useSelector((state) => {
+    /*
+    useEffect(() => {
+
+    })
+    */
     return state.myMovies.myMoviesList;
   });
 
-  console.log(myMovies);
+  console.log('myMovies is: ', myMovies);
 
   const feedItems = [];
 
@@ -19,7 +24,7 @@ const MovieList = (props) => {
           title={movie.original_title}
           year={movie.release_date}
           poster={movie.poster_path}
-          review={movie.review}
+          review={movie.comment}
           rating={movie.rating}
           movieId={movie.id}
         />

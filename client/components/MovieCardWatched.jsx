@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { addReview } from '../slices/myMoviesSlice';
+import { editMovie } from '../slices/myMoviesSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteMovie } from '../slices/myMoviesSlice';
@@ -49,14 +49,15 @@ const MovieCardWatched = (props) => {
         {/* <div> add className */}
         {props.title} ({trimYear(props.year)})
         <br />
-        <Rating
+        Rating: {props.rating}
+        {/* <Rating
           name='size-small'
           defaultValue={props.rating}
           size='small'
-          readOnly
-        />
+          disabled
+        /> */}
         <br />
-        {props.review}
+        Review: {props.review}
       </div>
       <Stack direction='column' spacing={1}>
         <IconButton
@@ -113,13 +114,14 @@ const MovieCardWatched = (props) => {
           <Button
             onClick={() => {
               dispatch(
-                addReview({
+                editMovie({
                   movieId: props.movieId,
                   comment: comment,
                   rating: rating,
+                  watched: true,
                 })
               );
-              console.log('comment', typeof comment);
+              // console.log('in onclick', comment, props.movieId, rating);
               setOpen(false);
             }}
             variant='contained'
