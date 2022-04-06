@@ -56,9 +56,9 @@ const LoginPage = () => {
             alt='goodwatch-logo'
             className='goodwatch-logo'
           />
-          <div>
+          {/* <div>
             <Link to='/dashboard'>Dashboard Back Door</Link>
-          </div>
+          </div> */}
           <div className='login-form'>
             <form>
               <TextField
