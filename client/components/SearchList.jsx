@@ -17,6 +17,7 @@ const Search = ({searchTerm}) => {
         movie={movie}
         movieId={movie.id}
         title={movie.original_title}
+        year={movie.release_date}
         poster={movie.poster_path}
       />
     );

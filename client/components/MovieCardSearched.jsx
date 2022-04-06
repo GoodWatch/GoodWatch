@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const searchResults = (props) => {
+  const trimYear = (releaseYear) => releaseYear.slice(0, 4);
+
   const navigate = useNavigate();
   const poster = 'https://image.tmdb.org/t/p/w92' + `${props.poster}`;
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ const searchResults = (props) => {
   return (
     <div className='movie-result'>
       <img onClick={() => navigate(`/movie/${props.movieId}`)} className='movie-card-pic' src={poster} />
-      <span>{props.title}</span>
+      <span>{props.title} ({trimYear(props.year)})</span>
       <div className='review-buttons'>
         <Tooltip title='To Watch' placement='right-start'>
           <IconButton
