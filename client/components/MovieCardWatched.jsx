@@ -10,16 +10,16 @@ import Typography from '@mui/material/Typography';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { editMovie } from '../slices/myMoviesSlice';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteMovie } from '../slices/myMoviesSlice';
+import MoviePosterImg from './MoviePosterImg';
+import { useDispatch } from 'react-redux';
+import { deleteMovie, editMovie } from '../slices/myMoviesSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const MovieCardWatched = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
+  const poster = `https://image.tmdb.org/t/p/w185${props.poster}`;
   const [open, setOpen] = useState(false);
   const [comment, setcomment] = useState('');
   const [rating, setRating] = useState(2);
@@ -40,11 +40,7 @@ const MovieCardWatched = (props) => {
 
   return (
     <div className='movie-card-watched'>
-      <img
-        onClick={() => navigate(`/movie/${props.movieId}`)}
-        className='movie-card-pic'
-        src={poster}
-      />
+      <MoviePosterImg src={poster} movieId={props.movieId}/>
       <div>
         {/* <div> add className */}
         {props.title} ({trimYear(props.year)})
@@ -82,7 +78,7 @@ const MovieCardWatched = (props) => {
         <DialogContent>
           <form className='review-form'>
             <span>
-              <img className='movie-card-pic' src={poster} />
+              <MoviePosterImg src={poster} movieId={props.movieId}/>
               <Typography component='legend'>Rating</Typography>
               <Rating
                 className='rating'

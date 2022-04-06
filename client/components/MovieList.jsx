@@ -1,18 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import MovieCardWatched from './MovieCardWatched';
+import { getMovies } from '../slices/myMoviesSlice.js';
+import { Button } from '@mui/material';
 
 const MovieList = (props) => {
-  const myMovies = useSelector((state) => {
-    /*
-    useEffect(() => {
+  const dispatch = useDispatch();
+  const { review, rating } = props;
 
-    })
-    */
+  const myMovies = useSelector((state) => {
     return state.myMovies.myMoviesList;
   });
-
-  console.log('myMovies is: ', myMovies);
 
   const feedItems = [];
 
@@ -31,8 +29,14 @@ const MovieList = (props) => {
       );
     }
   });
-
-  return <div className='movie-list'>{feedItems}</div>;
+  return (
+    <div className='movie-list'>
+      {feedItems}
+      <Button sx={{ width: '100%' }} onClick={() => dispatch(getMovies())}>
+        Get More
+      </Button>
+    </div>
+  );
 };
 
 export default MovieList;
