@@ -43,7 +43,6 @@ export const searchThunk = createAsyncThunk(
           },
         },
       });
-      // console.log(response.data.data);
       return response.data.data.searchMovies;
     } catch (e) {
       console.log(e);

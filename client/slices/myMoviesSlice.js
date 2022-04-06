@@ -6,6 +6,7 @@ import axios from 'axios';
 const initialState = {
   username: '',
   myMoviesList: [],
+  recommendedMovies: [],
   success: false,
   message: null,
   pageNum: 1,
@@ -84,6 +85,45 @@ export const logout = createAsyncThunk(
         },
       });
       return response.data.data.logout;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getMovieRecs = createAsyncThunk(
+  '/getMovieRecs', // <- unique string
+  async () => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          query GetMovieRecs {
+            getMovieRecs {
+              adult
+              genre_ids
+              id
+              original_language
+              original_title
+              overview
+              popularity
+              poster_path
+              release_date
+              title
+              video
+              vote_average
+              vote_count
+            }
+          }
+          `,
+        },
+      });
+      return response.data.data.getMovieRecs;
     } catch (e) {
       console.log(e);
     }
@@ -240,10 +280,12 @@ export const myMoviesSlice = createSlice({
         state.username = '';
       })
       .addCase(addMovie.fulfilled, (state, action) => {
-        // TODO: SET USERNAME
         if (action.payload.success) {
           state.myMoviesList.unshift(action.payload.data[0]);
         } else console.log(action.payload.message);
+      })
+      .addCase(getMovieRecs.fulfilled, (state, action) => {
+        state.recommendedMovies = action.payload;
       });
   },
 });
