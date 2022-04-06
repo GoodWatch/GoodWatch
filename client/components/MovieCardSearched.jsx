@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import MoviePosterImg from './MoviePosterImg';
 
 const searchResults = (props) => {
+  const trimYear = (releaseYear) => releaseYear.slice(0, 4);
+
   const navigate = useNavigate();
   const poster = 'https://image.tmdb.org/t/p/w185' + `${props.poster}`;
   const dispatch = useDispatch();
@@ -18,8 +20,12 @@ const searchResults = (props) => {
   };
   return (
     <div className='movie-result'>
-      <MoviePosterImg src={poster} movieId={props.movieId}/>
-      <span>{props.title}</span>
+      <MoviePosterImg src={poster} movieId={props.movieId} />
+      <span>
+        <h3>
+          {props.title} ({trimYear(props.year)})
+        </h3>
+      </span>
       <div className='review-buttons'>
         <Tooltip title='To Watch' placement='right-start'>
           <IconButton
