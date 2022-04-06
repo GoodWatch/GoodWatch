@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tooltip, Button, Box, Typography, IconButton } from '@mui/material';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import Rating from '@mui/material/Rating';
@@ -13,12 +13,10 @@ const RecommendMovies = () => {
   const recommendedMovies = useSelector(
     (state) => state.myMovies.recommendedMovies
   );
-  const [review, setReview] = useState('');
-  const [rating, setRating] = useState(2);
 
-  const handleReviewInput = (event) => {
-    setReview(event.target.value);
-  };
+  useEffect(() => {
+    dispatch(getMovieRecs());
+  }, []);
 
   return (
     <div className='review-modal'>

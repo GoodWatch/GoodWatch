@@ -35,7 +35,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (!myMoviesList.length) {
       dispatch(getMovies());
-      dispatch(getMovieRecs());
     }
   }, []);
 
