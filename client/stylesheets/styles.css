@@ -57,6 +57,9 @@ html, body {
   
   .movie-list {
     padding: 10px;
+    position: relative;
+    max-height: 90%;
+    overflow: auto;
   }
 
   .review-buttons {
