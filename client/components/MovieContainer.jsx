@@ -9,7 +9,7 @@ const MovieContainer = () => {
   const dispatch = useDispatch();
   const [watched, setWatchedState] = useState(true);
 
-  const [alignment, setAlignment] = useState('Watched');
+  const [alignment, setAlignment] = useState('watched');
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
