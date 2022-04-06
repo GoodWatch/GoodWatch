@@ -63,6 +63,54 @@ export const login = createAsyncThunk(
   }
 );
 
+export const getMovies = createAsyncThunk(
+  '/getMovies', // <- unique string
+  async () => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          query GetMovies {
+            getMovies {
+              adult
+              id
+              original_language
+              original_title
+              overview
+              popularity
+              poster_path
+              release_date
+              title
+              video
+              vote_average
+              vote_count
+              backdrop_path
+              homepage
+              imdb_id
+              revenue
+              runtime
+              status
+              tagline
+              rating
+              comment
+              watched
+            }
+          }
+          `,
+        },
+      });
+      return response.data.data.getMovies;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const myMoviesSlice = createSlice({
   name: 'myMovies',
   initialState,
@@ -77,14 +125,24 @@ export const myMoviesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(login.fulfilled, (state, action) => {
-      // TODO: SET USERNAME
-      if (action.payload.success) {
-        state.myMoviesList = action.payload.data;
-        state.success = action.payload.success;
-        state.message = action.payload.message;
-      }
-    });
+    builder
+      .addCase(login.fulfilled, (state, action) => {
+        // TODO: SET USERNAME
+        if (action.payload.success) {
+          state.myMoviesList = action.payload.data;
+          state.success = action.payload.success;
+          state.message = action.payload.message;
+        }
+      })
+      .addCase(getMovies.fulfilled, (state, action) => {
+        // TODO: SET USERNAME
+        // if (action.payload) {
+        console.log(action.payload);
+        state.myMoviesList = action.payload;
+        // state.success = action.payload.success;
+        // state.message = action.payload.message;
+        // }
+      });
   },
 });
 

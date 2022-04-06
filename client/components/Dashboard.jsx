@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchWindow from './SearchWindow';
 import MovieContainer from './MovieContainer';
 import ReviewModal from './ReviewModal';
 import GoodWatchLogo from '../Public/GoodWatchLogoWhiteSmall.png';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { getMovies } from '../slices/myMoviesSlice';
 
 const light = {
   palette: {
@@ -23,10 +24,18 @@ const light = {
 };
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const name = useSelector((state) => {
     // console.log('state is: ', state);
     return state.username.username;
   });
+  const myMoviesList = useSelector((state) => state.myMovies.myMoviesList);
+  useEffect(() => {
+    if (!myMoviesList.length) {
+      dispatch(getMovies());
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={createTheme(light)}>
       <div className='dashboard'>
