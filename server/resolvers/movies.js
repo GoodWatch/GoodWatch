@@ -100,10 +100,12 @@ module.exports = {
           success: true,
           message: 'Added Movie to Library',
           username,
-          data: [{
-            ...movieApiInfo,
-            ...userMovieInfo.rows[0],
-          }],
+          data: [
+            {
+              ...movieApiInfo,
+              ...userMovieInfo.rows[0],
+            },
+          ],
         };
       } catch (error) {
         if (error.code === '23505') {
@@ -139,11 +141,20 @@ module.exports = {
     async deleteMovie(_, { movie_id }, { username }) {
       try {
         const query = {
-          text: 'DELETE FROM Users_Movie WHERE username=$1 && movie_id=$2',
+          text: 'DELETE FROM Users_Movies WHERE username=$1 AND movie_id=$2 RETURNING *',
           values: [username, movie_id],
         };
-        await pool.query(query);
-        return 'Movie deleted';
+        const movie = await pool.query(query);
+        if (movie.rows.length) {
+          return {
+            success: true,
+            message: 'Movie deleted',
+          };
+        }
+        return {
+          success: false,
+          message: 'Movie not in library',
+        };
       } catch (error) {
         throw new Error(error);
       }

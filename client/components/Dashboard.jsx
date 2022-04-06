@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import SearchWindow from './SearchWindow';
 import MovieContainer from './MovieContainer';
-import ReviewModal from './ReviewModal';
+import RecommendMovies from './RecommendMovies';
 import GoodWatchLogo from '../Public/GoodWatchLogoWhiteSmall.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { getMovies, logout } from '../slices/myMoviesSlice';
+import { getMovieRecs, getMovies, logout } from '../slices/myMoviesSlice';
 import { useNavigate } from 'react-router-dom';
+import { Recommend } from '@mui/icons-material';
 
 const light = {
   palette: {
@@ -59,7 +60,7 @@ const Dashboard = () => {
         </div>
         <MovieContainer  />
         <SearchWindow />
-        <ReviewModal />
+        <RecommendMovies />
       </div>
     </ThemeProvider>
   );

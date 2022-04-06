@@ -90,6 +90,11 @@ const typeDefs = gql`
     data: [MovieExt]
   }
 
+  type SimpleResponse {
+    success: Boolean!
+    message: String!
+  }
+
 
   type Query {
     login(username: String!, password: String!): Response!
@@ -116,7 +121,7 @@ const typeDefs = gql`
       comment: String
       watched: Boolean
     ): Response
-    deleteMovie(movie_id: Int!): String
+    deleteMovie(movie_id: Int!): SimpleResponse!
   }
 `;
 

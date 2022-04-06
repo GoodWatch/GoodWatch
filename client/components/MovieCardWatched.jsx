@@ -5,24 +5,29 @@ import { TextField, Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import Dialog from '@mui/material/Dialog';
-import ReviewsIcon from '@mui/icons-material/Reviews';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
+import MoviePosterImg from './MoviePosterImg';
+import { useDispatch } from 'react-redux';
+import { deleteMovie, editMovie } from '../slices/myMoviesSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MovieCardWatched = (props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
+  const poster = `https://image.tmdb.org/t/p/w185${props.poster}`;
   const [open, setOpen] = useState(false);
-  const [review, setReview] = useState('');
+  const [comment, setcomment] = useState('');
   const [rating, setRating] = useState(2);
 
+  const trimYear = (releaseYear) => releaseYear.slice(0, 4);
+
   const handleReviewInput = (event) => {
-    setReview(event.target.value);
+    setcomment(event.target.value);
   };
 
   const handleClickOpen = () => {
@@ -35,13 +40,33 @@ const MovieCardWatched = (props) => {
 
   return (
     <div className='movie-card-watched'>
-      <img
-        onClick={() => navigate(`/movie/${props.movieId}`)}
-        className='movie-card-pic'
-        src={poster}
-      />
-      {props.title}
-      <Stack direction='row' spacing={1}>
+      <MoviePosterImg src={poster} movieId={props.movieId}/>
+      <div>
+        {/* <div> add className */}
+        {props.title} ({trimYear(props.year)})
+        <br />
+        Rating: {props.rating}
+        {/* <Rating
+          name='size-small'
+          defaultValue={props.rating}
+          size='small'
+          disabled
+        /> */}
+        <br />
+        Review: {props.review}
+      </div>
+      <Stack direction='column' spacing={1}>
+        <IconButton
+          onClick={() => {
+            dispatch(deleteMovie({ movieId: props.movieId }));
+          }}
+          variant='contained'
+          color='primary'
+          className='button-search'
+          size='large'
+        >
+          <DeleteIcon />
+        </IconButton>
         <Tooltip title='Write Review' placement='right'>
           <IconButton color='primary' onClick={handleClickOpen}>
             <RateReviewIcon />
@@ -53,7 +78,7 @@ const MovieCardWatched = (props) => {
         <DialogContent>
           <form className='review-form'>
             <span>
-              <img className='movie-card-pic' src={poster} />
+              <MoviePosterImg src={poster} movieId={props.movieId}/>
               <Typography component='legend'>Rating</Typography>
               <Rating
                 className='rating'
@@ -72,31 +97,31 @@ const MovieCardWatched = (props) => {
               name='review'
               rows={7}
               size='small'
-              value={review}
+              value={comment}
               style={{ width: '100%' }}
               multiline
             />
-            <span>
-              {/* <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                variant='contained'
-                size='medium'
-                color='primary'
-                className='review-button'
-                style={{ margin: '2px', fontWeight: 'bold', width: '5%' }}
-              >
-                <ReviewsIcon />
-              </Button> */}
-            </span>
           </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant='contained'>
             Cancel
           </Button>
-          <Button onClick={handleClose} variant='contained'>
+          <Button
+            onClick={() => {
+              dispatch(
+                editMovie({
+                  movieId: props.movieId,
+                  comment: comment,
+                  rating: rating,
+                  watched: true,
+                })
+              );
+              // console.log('in onclick', comment, props.movieId, rating);
+              setOpen(false);
+            }}
+            variant='contained'
+          >
             Submit
           </Button>
         </DialogActions>
