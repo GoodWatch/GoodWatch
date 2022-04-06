@@ -40,10 +40,12 @@ const MovieCardWatched = (props) => {
 
   return (
     <div className='movie-card-watched'>
-      <MoviePosterImg src={poster} movieId={props.movieId}/>
-      <div>
+      <MoviePosterImg src={poster} movieId={props.movieId} />
+      <div className='movie-card-text'>
         {/* <div> add className */}
-        {props.title} ({trimYear(props.year)})
+        <strong>
+          {props.title} ({trimYear(props.year)})
+        </strong>
         <br />
         Rating: {props.rating}
         {/* <Rating
@@ -55,30 +57,32 @@ const MovieCardWatched = (props) => {
         <br />
         Review: {props.review}
       </div>
-      <Stack direction='column' spacing={1}>
-        <IconButton
-          onClick={() => {
-            dispatch(deleteMovie({ movieId: props.movieId }));
-          }}
-          variant='contained'
-          color='primary'
-          className='button-search'
-          size='large'
-        >
-          <DeleteIcon />
-        </IconButton>
-        <Tooltip title='Write Review' placement='right'>
-          <IconButton color='primary' onClick={handleClickOpen}>
-            <RateReviewIcon />
+      <div className='movie-card-buttons'>
+        <Stack direction='column' spacing={1}>
+          <IconButton
+            onClick={() => {
+              dispatch(deleteMovie({ movieId: props.movieId }));
+            }}
+            variant='contained'
+            color='primary'
+            className='button-search'
+            size='large'
+          >
+            <DeleteIcon />
           </IconButton>
-        </Tooltip>
-      </Stack>
+          <Tooltip title='Write Review' placement='right'>
+            <IconButton color='primary' onClick={handleClickOpen}>
+              <RateReviewIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Review</DialogTitle>
         <DialogContent>
           <form className='review-form'>
             <span>
-              <MoviePosterImg src={poster} movieId={props.movieId}/>
+              <MoviePosterImg src={poster} movieId={props.movieId} />
               <Typography component='legend'>Rating</Typography>
               <Rating
                 className='rating'
