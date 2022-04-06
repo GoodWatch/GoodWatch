@@ -15,39 +15,46 @@ const setToken = (res, username) => {
 module.exports = {
   Query: {
     async login(_, { username, password }, { dataSources, res }) {
-      const query = {
-        text: 'SELECT * FROM Users WHERE username = $1',
-        values: [username],
-      };
-      const user = await pool.query(query);
-      if (user.rows) {
-        const match = await bcrypt.compare(password, user.rows[0].password);
-        if (match) {
-          // Set users token
-          setToken(res, user.rows[0].username);
-          const allMovieInfoArr = await movieResolver.Query.getMovies(
-            _,
-            { pageNum: 1 },
-            { dataSources, username }
-          );
-          return {
-            success: true,
-            message: 'Logged in',
-            data: allMovieInfoArr,
-          };
+      try {
+        const query = {
+          text: 'SELECT * FROM Users WHERE username = $1',
+          values: [username],
+        };
+        const user = await pool.query(query);
+        if (user.rows.length) {
+          const match = await bcrypt.compare(password, user.rows[0].password);
+          if (match) {
+            // Set users token
+            setToken(res, user.rows[0].username);
+            const allMovieInfoArr = await movieResolver.Query.getMovies(
+              _,
+              { pageNum: 1 },
+              { dataSources, username }
+            );
+            return {
+              success: true,
+              message: 'Logged in',
+              username,
+              data: allMovieInfoArr.data,
+            };
+          } else {
+            return {
+              success: false,
+              message: 'Incorrect credentials',
+              username: '',
+              data: [],
+            };
+          }
         } else {
           return {
             success: false,
-            message: 'Incorrect credentials',
+            message: 'Username or password does not match',
+            username: '',
             data: [],
           };
         }
-      } else {
-        return {
-          success: false,
-          message: 'Username or password does not match',
-          data: [],
-        };
+      } catch (error) {
+        throw new Error(error);
       }
     },
     async logout(_, __, { res }) {
@@ -71,6 +78,7 @@ module.exports = {
         return {
           success: true,
           message: 'Signed Up',
+          username,
           data: [],
         };
       } catch (error) {
@@ -78,6 +86,7 @@ module.exports = {
           return {
             success: false,
             message: 'Username already exists',
+            username: '',
             data: [],
           };
         }
@@ -94,7 +103,12 @@ module.exports = {
           values: [username, password, email],
         };
         const user = await pool.query(query);
-        return user.rows[0];
+        return {
+          success: true,
+          message: 'Username info changed',
+          username: user.rows[0].username,
+          data: [],
+        };
       } catch (error) {
         throw new Error(error);
       }

@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { TextField, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchList from './SearchList';
-import { searchThunk } from '../slices/searchSlice.js';
+import { searchThunk, searchMoreThunk } from '../slices/searchSlice.js';
 import { useDispatch } from 'react-redux';
 
 const SearchWindow = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchField, setSearchField] = useState('');
+  // const [scrollDebounce, setScrollDebounce] = useState(true);
+  const scrollDebounce = useRef(true);
 
   const handleSearchFieldInput = (event) => {
     setSearchField(event.target.value);
   };
 
-  const handleSearchTerm = (searchTerm) => {
-    if(searchField.trim().length) {
+  const handleScroll = (e) => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 80;
+    if (bottom && scrollDebounce.current) {
+      scrollDebounce.current = false;
+      dispatch(searchMoreThunk(searchTerm));
+      setTimeout(() => (scrollDebounce.current = true), 1000);
+    }
+  };
+
+  const handleSearchTerm = (e) => {
+    e.preventDefault();
+    if (searchField.trim().length) {
       setSearchTerm(searchField);
       dispatch(searchThunk(searchField));
     }
@@ -23,7 +36,7 @@ const SearchWindow = () => {
 
   return (
     <div className='search-window'>
-      <form>
+      <form onSubmit={handleSearchTerm}>
         <TextField
           onChange={handleSearchFieldInput}
           type='text'
@@ -35,7 +48,7 @@ const SearchWindow = () => {
         ></TextField>
         <span>
           <Button
-            onClick={handleSearchTerm}
+            type='Submit'
             variant='contained'
             size='medium'
             color='primary'
@@ -45,11 +58,9 @@ const SearchWindow = () => {
           </Button>
         </span>
       </form>
-      <div>
-        {searchTerm ? `Showing results for ${searchTerm}:` : ''}
-      </div>
-      <div className='search-results'>
-        {searchTerm && <SearchList />}
+      <div>{searchTerm ? `Showing results for ${searchTerm}:` : ''}</div>
+      <div className='search-results' onScroll={handleScroll}>
+        {searchTerm && <SearchList searchTerm={searchTerm} />}
       </div>
     </div>
   );

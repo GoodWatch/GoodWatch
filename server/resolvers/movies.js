@@ -15,7 +15,7 @@ module.exports = {
       try {
         const querySize = 10; // set number of results per query
         const query = {
-          text: 'SELECT * FROM Users_Movies WHERE username = $1 offset $2 limit $3',
+          text: 'SELECT * FROM Users_Movies WHERE username = $1 ORDER BY created_at DESC offset $2 limit $3',
           values: [username, (pageNum - 1) * querySize, querySize],
         };
         const movie = await pool.query(query);
@@ -23,7 +23,16 @@ module.exports = {
           dataSources.MovieAPI.getMovieInfo({ movie_id })
         );
         const movieInfoArr = await Promise.all(promiseArr);
-        return movie.rows.map((cur, i) => ({ ...cur, ...movieInfoArr[i] }));
+        const movieInforArrComplete = movie.rows.map((cur, i) => ({
+          ...cur,
+          ...movieInfoArr[i],
+        }));
+        return {
+          success: true,
+          message: 'Movies collected',
+          username: username,
+          data: movieInforArrComplete,
+        };
       } catch (error) {
         throw new Error(error);
       }
@@ -76,24 +85,33 @@ module.exports = {
     async addMovie(
       _,
       { movie_id, rating = 0, comment = '', watched },
-      { username }
+      { username, dataSources }
     ) {
       try {
         const query = {
-          text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5)',
+          text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5) RETURNING *',
           values: [username, movie_id, rating, comment, watched],
         };
-        await pool.query(query);
+        const [movieApiInfo, userMovieInfo] = await Promise.all([
+          dataSources.MovieAPI.getMovieInfo({ movie_id }),
+          pool.query(query),
+        ]);
         return {
           success: true,
           message: 'Added Movie to Library',
-          data: [],
+          username,
+          data: [{
+            ...movieApiInfo,
+            ...userMovieInfo.rows[0],
+          }],
         };
       } catch (error) {
         if (error.code === '23505') {
           return {
             success: false,
             message: 'Movie is already in library',
+            username: '',
+            data: [],
           };
         }
         throw new Error(error);

@@ -8,7 +8,6 @@ import { InputAdornment } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../slices/usernameSlice';
 import { login } from '../slices/myMoviesSlice';
 
 const light = {
@@ -42,9 +41,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(isLoggedIn);
     if (isLoggedIn) navigate('/dashboard');
-    else console.log(message);
+    else console.log(message); //Todo: display on screen
   }, [isLoggedIn, message]);
 
   return (

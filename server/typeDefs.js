@@ -86,13 +86,14 @@ const typeDefs = gql`
   type Response {
     success: Boolean!
     message: String!
+    username: String
     data: [MovieExt]
   }
 
 
   type Query {
     login(username: String!, password: String!): Response!
-    getMovies(pageNum: Int): [MovieExt]
+    getMovies(pageNum: Int): Response
     searchMovies(searchTerm: String!, pageNum: Int): [Movie]
     getMovieInfo(movie_id: Int!): MovieExt
     logout: String!
@@ -101,7 +102,7 @@ const typeDefs = gql`
 
   type Mutation {
     signUp(username: String!, password: String!, email: String!): Response!
-    editUser(password: String!, email: String): User
+    editUser(password: String!, email: String): Response
     deleteUser: String
     addMovie(
       movie_id: Int!

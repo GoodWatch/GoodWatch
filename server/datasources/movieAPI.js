@@ -7,10 +7,10 @@ class MovieAPI extends RESTDataSource {
     this.baseURL = 'https://api.themoviedb.org/3/';
   }
 
-  async searchMovies({ searchTerm, page = 1 }) {
+  async searchMovies({ searchTerm, pageNum }) {
     const response = await this.get('search/movie', {
       query: searchTerm,
-      page,
+      page: pageNum,
       language: 'en-US',
       api_key,
     });

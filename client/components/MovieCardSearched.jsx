@@ -12,7 +12,6 @@ const searchResults = (props) => {
 
   const dispatch = useDispatch();
   const handleAddMovie = () => {
-
     dispatch(addMovie(props.movie));
   };
   return (
@@ -22,6 +21,9 @@ const searchResults = (props) => {
       <div className='review-buttons'>
         <Tooltip title='To Watch' placement='right-start'>
           <IconButton
+            onClick={() =>
+              dispatch(addMovie({ movieId: props.movieId, watched: false }))
+            }
             variant='contained'
             color='primary'
             className='button-search'
@@ -33,7 +35,9 @@ const searchResults = (props) => {
         <br />
         <Tooltip title='Watched' placement='right-start'>
           <IconButton
-            onClick={handleAddMovie}
+            onClick={() =>
+              dispatch(addMovie({ movieId: props.movieId, watched: true }))
+            }
             color='primary'
             variant='contained'
             className='button-search'

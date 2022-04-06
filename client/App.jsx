@@ -4,7 +4,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import Dashboard from './components/Dashboard';
 import LoginPage from './components/LoginPage';
-import SignupPage from './components/Signup';
 import './stylesheets/styles.css';
 import { Outlet, Link } from 'react-router-dom';
 
