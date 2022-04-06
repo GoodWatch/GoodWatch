@@ -26,15 +26,6 @@ const ReviewModal = () => {
               setRating(newValue);
             }}
           />
-          {/* <h3>Rating: </h3>
-          <select name='selectList' id='selectlist'>
-            <option value='option 1'>0</option>
-            <option value='option 2'>1</option>
-            <option value='option 3'>2</option>
-            <option value='option 4'>3</option>
-            <option value='option 5'>4</option>
-            <option value='option 6'>5</option>
-          </select> */}
         </span>
         <TextField
           onChange={handleReviewInput}
