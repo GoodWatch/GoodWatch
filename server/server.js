@@ -10,6 +10,7 @@ const typeDefs = require('./typeDefs.js');
 const resolvers = require('./resolvers/index.js');
 const MovieAPI = require('./datasources/movieAPI.js');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const dataSources = () => ({
   MovieAPI: new MovieAPI(),
@@ -51,8 +52,11 @@ async function startApolloServer(typeDefs, resolvers, dataSources) {
       credentials: true,
     },
   });
-
-  // app.use('/auth', authRouter);
+  isProduction &&
+    app.get('/', (req, res) => {
+      res.sendFile(path.resolve('dist', 'index.html'));
+    });
+  isProduction && app.use('/', express.static(path.resolve('dist')));
 
   await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);

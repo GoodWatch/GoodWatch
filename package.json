@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open /\" \"cross-env NODE_ENV=development nodemon ./server/server.js\"",
     "start-dev": "cross-env NODE_ENV=development nodemon ./server/server.js",
-    "start": "nodemon ./server/server.js"
+    "start": "cross-env NODE_ENV=production nodemon ./server/server.js"
   },
   "repository": {
     "type": "git",

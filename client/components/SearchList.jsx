@@ -24,7 +24,7 @@ const Search = ({searchTerm}) => {
   return (
     <div className='search-list'>
       {searchedMovieList}
-      <CircularProgress />
+      {/* <CircularProgress /> */}
     </div>
   );
 };

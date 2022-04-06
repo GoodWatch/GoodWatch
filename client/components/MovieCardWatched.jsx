@@ -12,9 +12,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useNavigate } from 'react-router-dom';
 
 const MovieCardWatched = (props) => {
-  const poster = 'https://image.tmdb.org/t/p/w92' + `${props.poster}`;
+  const navigate = useNavigate();
+  const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
   const [open, setOpen] = useState(false);
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(2);
@@ -33,7 +35,11 @@ const MovieCardWatched = (props) => {
 
   return (
     <div className='movie-card-watched'>
-      <img className='movie-card-pic' src={poster} />
+      <img
+        onClick={() => navigate(`/movie/${props.movieId}`)}
+        className='movie-card-pic'
+        src={poster}
+      />
       {props.title}
       <Stack direction='row' spacing={1}>
         <Tooltip title='Write Review' placement='right'>
@@ -69,7 +75,7 @@ const MovieCardWatched = (props) => {
               value={review}
               style={{ width: '100%' }}
               multiline
-            ></TextField>
+            />
             <span>
               {/* <Button
                 onClick={(e) => {

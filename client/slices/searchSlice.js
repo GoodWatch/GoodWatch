@@ -114,7 +114,6 @@ const searchReducer = createSlice({
       })
       .addCase(searchMoreThunk.fulfilled, (state, action) => {
         state.pageNumber += 1;
-        console.log(action.payload);
         state.displayResults.push(...action.payload);
       });
   },

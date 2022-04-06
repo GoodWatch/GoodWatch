@@ -91,60 +91,6 @@ export const logout = createAsyncThunk(
 );
 
 export const getMovies = createAsyncThunk(
-  '/getMovies', // <- unique string
-  async (pageNum) => {
-    try {
-      const response = await axios({
-        url: '/graphql',
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          query: `
-          query GetMovies {
-            getMovies {
-              success
-              message
-              username
-              data {
-                adult
-                id
-                original_language
-                original_title
-                overview
-                popularity
-                poster_path
-                release_date
-                title
-                video
-                vote_average
-                vote_count
-                backdrop_path
-                homepage
-                imdb_id
-                revenue
-                runtime
-                status
-                tagline
-                rating
-                comment
-                watched
-              }
-            }
-          }
-          `,
-          variables: { pageNum },
-        },
-      });
-      return response.data.data.getMovies;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
-export const getMoreMovies = createAsyncThunk(
   '/getMoreMovies', // <- unique string
   async (_, { getState }) => {
     const state = getState();
@@ -280,16 +226,10 @@ export const myMoviesSlice = createSlice({
       })
       .addCase(getMovies.fulfilled, (state, action) => {
         if (action.payload.success) {
-          state.myMoviesList = action.payload.data;
+          state.myMoviesList.push(...action.payload.data);
           state.success = action.payload.success;
           state.message = action.payload.message;
           state.username = action.payload.username;
-          state.pageNum += 1;
-        }
-      })
-      .addCase(getMoreMovies.fulfilled, (state, action) => {
-        if (action.payload.success) {
-          state.myMoviesList.push(...action.payload.data);
           state.pageNum += 1;
         }
       })
