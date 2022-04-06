@@ -43,9 +43,9 @@ const MovieCardWatched = (props) => {
       <MoviePosterImg src={poster} movieId={props.movieId} />
       <div className='movie-card-text'>
         {/* <div> add className */}
-        <strong>
+        <Typography style={{ fontWeight: 800 }}>
           {props.title} ({trimYear(props.year)})
-        </strong>
+        </Typography>
         <br />
         Rating: {props.rating}
         {/* <Rating

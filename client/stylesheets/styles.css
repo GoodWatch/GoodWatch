@@ -87,6 +87,7 @@ html, body {
     padding-bottom: 10px;
     height: 100%;
     width: 90%;
+    margin-left: 20px;
     /* border: 2px solid #003385; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: transform .3s;
@@ -155,7 +156,7 @@ html, body {
     display: flex;
     /* flex-direction: row; */
     /* justify-content: space-between; */
-    width: 100%;
+    width: 97%;
     max-height: 10em;
   }
 
