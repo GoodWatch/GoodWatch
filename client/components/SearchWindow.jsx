@@ -17,14 +17,14 @@ const SearchWindow = () => {
   };
 
   const handleScroll = (e) => {
-
-    const bottom = e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 80;
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 80;
     if (bottom && scrollDebounce.current) {
       scrollDebounce.current = false;
       dispatch(searchMoreThunk(searchTerm));
-      setTimeout(()=>scrollDebounce.current = true, 3000);
+      setTimeout(() => (scrollDebounce.current = true), 1000);
     }
-  }
+  };
 
   const handleSearchTerm = (e) => {
     e.preventDefault();

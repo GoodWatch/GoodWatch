@@ -67,7 +67,6 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
   '/logout', // <- unique string
   async () => {
-
     try {
       const response = await axios({
         url: '/graphql',
@@ -143,15 +142,68 @@ export const getMovies = createAsyncThunk(
   }
 );
 
+export const addMovie = createAsyncThunk(
+  '/addMovie', // <- unique string
+  async ({movieId, watched}) => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          mutation AddMovie($movieId: Int!, $watched: Boolean!, $rating: Int) {
+            addMovie(movie_id: $movieId, watched: $watched, rating: $rating) {
+              success
+              message
+              data {
+                adult
+                id
+                original_language
+                original_title
+                overview
+                popularity
+                poster_path
+                release_date
+                title
+                video
+                vote_average
+                vote_count
+                backdrop_path
+                homepage
+                imdb_id
+                revenue
+                runtime
+                status
+                tagline
+                rating
+                comment
+                watched
+              }
+            }
+          }
+          `,
+          variables: { movieId, watched },
+        },
+      });
+      return response.data.data.addMovie;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const myMoviesSlice = createSlice({
   name: 'myMovies',
   initialState,
   reducers: {
-    addMovie: (state, action) => {
-      const movie = { ...action.payload };
-      movie.watched = true;
-      state.myMoviesList.push(movie);
-    },
+    // addMovie: (state, action) => {
+    //   const movie = { ...action.payload };
+    //   movie.watched = true;
+    //   state.myMoviesList.push(movie);
+    // },
     deleteMovie: (state, action) => {
       state.myMoviesList = state.myMoviesList.filter(
         (movie) => movie != action.payload
@@ -188,6 +240,6 @@ export const myMoviesSlice = createSlice({
   },
 });
 
-export const { addMovie, deleteMovie } = myMoviesSlice.actions;
+export const { deleteMovie } = myMoviesSlice.actions;
 
 export default myMoviesSlice.reducer;

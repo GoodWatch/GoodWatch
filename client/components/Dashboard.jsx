@@ -28,7 +28,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const name = useSelector((state) => state.myMovies.username);
   const myMoviesList = useSelector((state) => state.myMovies.myMoviesList);
-  const success = useSelector((state)=>state.myMovies.success)
+  const success = useSelector((state) => state.myMovies.success);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const Dashboard = () => {
             variant='contained'
             color='secondary'
             style={{ fontWeight: 'bolder' }}
-            onClick={()=>dispatch(logout())}
+            onClick={() => dispatch(logout())}
           >
             Sign Out
           </Button>
