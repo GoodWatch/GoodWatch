@@ -142,10 +142,11 @@ module.exports = {
       try {
         console.log(typeof movie_id);
         const query = {
-          text: 'DELETE FROM Users_Movies WHERE username=$1 AND movie_id=$2',
+          text: 'DELETE FROM Users_Movies WHERE username=$1 AND movie_id=$2 RETURNING *',
           values: [username, movie_id],
         };
-        await pool.query(query);
+        const movie = await pool.query(query);
+        if (!movie.rows.length) return 'Movie not in your library';
         return 'Movie deleted';
       } catch (error) {
         throw new Error(error);
