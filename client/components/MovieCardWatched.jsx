@@ -5,24 +5,26 @@ import { TextField, Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import Dialog from '@mui/material/Dialog';
-import ReviewsIcon from '@mui/icons-material/Reviews';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { addReview } from '../slices/myMoviesSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { deleteMovie } from '../slices/myMoviesSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MovieCardWatched = (props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [comment, setcomment] = useState('');
   const [rating, setRating] = useState(2);
+
+  const trimYear = (releaseYear) => releaseYear.slice(0, 4);
 
   const handleReviewInput = (event) => {
     setcomment(event.target.value);
@@ -43,8 +45,9 @@ const MovieCardWatched = (props) => {
         className='movie-card-pic'
         src={poster}
       />
-      <div className='movie-card-watched-title'>
-        {props.title}
+      <div>
+        {/* <div> add className */}
+        {props.title} ({trimYear(props.year)})
         <br />
         <Rating
           name='size-small'
@@ -55,7 +58,18 @@ const MovieCardWatched = (props) => {
         <br />
         {props.review}
       </div>
-      <Stack direction='row' spacing={1}>
+      <Stack direction='column' spacing={1}>
+        <IconButton
+          onClick={() => {
+            dispatch(deleteMovie({ movieId: props.movieId }));
+          }}
+          variant='contained'
+          color='primary'
+          className='button-search'
+          size='large'
+        >
+          <DeleteIcon />
+        </IconButton>
         <Tooltip title='Write Review' placement='right'>
           <IconButton color='primary' onClick={handleClickOpen}>
             <RateReviewIcon />

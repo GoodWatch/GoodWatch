@@ -239,6 +239,36 @@ export const addMovie = createAsyncThunk(
   }
 );
 
+export const deleteMovie = createAsyncThunk(
+  '/deleteMovie',
+  async ({ movieId }) => {
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+            mutation DeleteMovie($movieId: Int!) {
+              deleteMovie(movie_id: $movieId) {
+                success
+                message
+              }
+            }
+          `,
+          variables: { movieId },
+        },
+      });
+      response.data.data.deleteMovie.movieId = movieId;
+      return response.data.data.deleteMovie;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const addReview = createAsyncThunk(
   '/addReview', // <- unique string
   async ({ movieId, comment, rating }) => {
@@ -301,11 +331,11 @@ export const myMoviesSlice = createSlice({
     //   movie.watched = true;
     //   state.myMoviesList.push(movie);
     // },
-    deleteMovie: (state, action) => {
-      state.myMoviesList = state.myMoviesList.filter(
-        (movie) => movie != action.payload
-      );
-    },
+    // deleteMovie: (state, action) => {
+    //   state.myMoviesList = state.myMoviesList.filter(
+    //     (movie) => movie != action.payload
+    //   );
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -337,12 +367,21 @@ export const myMoviesSlice = createSlice({
           state.myMoviesList.unshift(action.payload.data[0]);
         } else console.log(action.payload.message);
       })
+      .addCase(deleteMovie.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          console.log('action.payload', action.payload);
+          state.myMoviesList = state.myMoviesList.filter(
+            (movie) => movie.id !== action.payload.movieId
+          );
+          // state.myMoviesList.splice(state.myMoviesList.findIndex((movie) => movie.id === action.payload.movieId), 1);
+        } else console.log(action.payload.message);
+      })
       .addCase(getMovieRecs.fulfilled, (state, action) => {
         state.recommendedMovies = action.payload;
       });
   },
 });
 
-export const { deleteMovie } = myMoviesSlice.actions;
+// export const { deleteMovie } = myMoviesSlice.actions;
 
 export default myMoviesSlice.reducer;
