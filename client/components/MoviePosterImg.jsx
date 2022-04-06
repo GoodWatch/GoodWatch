@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MoviePosterFallback from '../Public/MoviePosterFallback.png';
 
-const MoviePosterImg = ({ src, movieId }) => {
+const MoviePosterImg = ({ src, movieId, ...rest }) => {
   const navigate = useNavigate();
 
   return (
@@ -14,6 +14,7 @@ const MoviePosterImg = ({ src, movieId }) => {
         currentTarget.onerror = null; // prevents looping
         currentTarget.src = MoviePosterFallback;
       }}
+      {...rest}
     />
   );
 };
