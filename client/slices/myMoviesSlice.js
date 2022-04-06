@@ -8,6 +8,7 @@ const initialState = {
   myMoviesList: [],
   success: false,
   message: null,
+  pageNum: 1,
 };
 
 export const login = createAsyncThunk(
@@ -91,7 +92,7 @@ export const logout = createAsyncThunk(
 
 export const getMovies = createAsyncThunk(
   '/getMovies', // <- unique string
-  async () => {
+  async (pageNum) => {
     try {
       const response = await axios({
         url: '/graphql',
@@ -133,6 +134,63 @@ export const getMovies = createAsyncThunk(
             }
           }
           `,
+          variables: { pageNum },
+        },
+      });
+      return response.data.data.getMovies;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getMoreMovies = createAsyncThunk(
+  '/getMoreMovies', // <- unique string
+  async (_, { getState }) => {
+    const state = getState();
+
+    try {
+      const response = await axios({
+        url: '/graphql',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          query: `
+          query SearchMovies($pageNum: Int) {
+            getMovies(pageNum: $pageNum) {
+              success
+              message
+              username
+              data {
+                adult
+                id
+                original_language
+                original_title
+                overview
+                popularity
+                poster_path
+                release_date
+                title
+                video
+                vote_average
+                vote_count
+                backdrop_path
+                homepage
+                imdb_id
+                revenue
+                runtime
+                status
+                tagline
+                rating
+                comment
+                watched
+              }
+            }
+          }
+          `,
+          variables: { pageNum: state.myMovies.pageNum },
         },
       });
       return response.data.data.getMovies;
@@ -144,7 +202,7 @@ export const getMovies = createAsyncThunk(
 
 export const addMovie = createAsyncThunk(
   '/addMovie', // <- unique string
-  async ({movieId, watched}) => {
+  async ({ movieId, watched }) => {
     try {
       const response = await axios({
         url: '/graphql',
@@ -213,7 +271,6 @@ export const myMoviesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        // TODO: SET USERNAME
         if (action.payload.success) {
           state.myMoviesList = action.payload.data;
           state.success = action.payload.success;
@@ -222,20 +279,31 @@ export const myMoviesSlice = createSlice({
         }
       })
       .addCase(getMovies.fulfilled, (state, action) => {
-        // TODO: SET USERNAME
         if (action.payload.success) {
           state.myMoviesList = action.payload.data;
           state.success = action.payload.success;
           state.message = action.payload.message;
           state.username = action.payload.username;
+          state.pageNum += 1;
+        }
+      })
+      .addCase(getMoreMovies.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.myMoviesList.push(...action.payload.data);
+          state.pageNum += 1;
         }
       })
       .addCase(logout.fulfilled, (state, action) => {
-        // TODO: SET USERNAME
         state.myMoviesList = [];
         state.success = false;
         state.message = '';
         state.username = '';
+      })
+      .addCase(addMovie.fulfilled, (state, action) => {
+        // TODO: SET USERNAME
+        if (action.payload.success) {
+          state.myMoviesList.unshift(action.payload.data[0]);
+        } else console.log(action.payload.message);
       });
   },
 });

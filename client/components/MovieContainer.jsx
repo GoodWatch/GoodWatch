@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { ToggleButton, ToggleButtonGroup, Button } from '@mui/material';
 import MovieList from './MovieList';
+import { useDispatch } from 'react-redux';
+import { getMoreMovies } from '../slices/myMoviesSlice.js';
 
 const MovieContainer = () => {
+  const dispatch = useDispatch();
   const [watched, setWatchedState] = useState(true);
 
   const [alignment, setAlignment] = useState('Watched');
@@ -18,7 +20,9 @@ const MovieContainer = () => {
   };
   return (
     <div className='movie-container'>
-      <h2>My Movies</h2>
+      <h2>
+        My Movies<Button onClick={() => dispatch(getMoreMovies())}>Get More</Button>
+      </h2>
       <div className='movie-list-buttons'>
         <span>
           <ToggleButtonGroup

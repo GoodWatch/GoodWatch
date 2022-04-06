@@ -15,6 +15,7 @@ const Search = ({searchTerm}) => {
       <MovieCardSearched
         key={i}
         movie={movie}
+        movieId={movie.id}
         title={movie.original_title}
         poster={movie.poster_path}
       />

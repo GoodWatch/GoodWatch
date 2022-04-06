@@ -15,7 +15,7 @@ module.exports = {
       try {
         const querySize = 10; // set number of results per query
         const query = {
-          text: 'SELECT * FROM Users_Movies WHERE username = $1 offset $2 limit $3',
+          text: 'SELECT * FROM Users_Movies WHERE username = $1 ORDER BY created_at DESC offset $2 limit $3',
           values: [username, (pageNum - 1) * querySize, querySize],
         };
         const movie = await pool.query(query);
