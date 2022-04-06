@@ -13,13 +13,19 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteMovie } from '../slices/myMoviesSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MovieCardWatched = (props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
   const [open, setOpen] = useState(false);
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(2);
+
+  const trimYear = (releaseYear) => releaseYear.slice(0,4);
 
   const handleReviewInput = (event) => {
     setReview(event.target.value);
@@ -40,7 +46,18 @@ const MovieCardWatched = (props) => {
         className='movie-card-pic'
         src={poster}
       />
-      {props.title}
+      {props.title} ({trimYear(props.year)})
+      <IconButton
+        onClick={() => {
+          dispatch(deleteMovie({ movieID: props.movieID}));
+        }}
+        variant='contained'
+        color='primary'
+        className='button-search'
+        size='large'
+      >
+        <DeleteIcon />
+      </ IconButton>
       <Stack direction='row' spacing={1}>
         <Tooltip title='Write Review' placement='right'>
           <IconButton color='primary' onClick={handleClickOpen}>

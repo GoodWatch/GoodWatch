@@ -19,6 +19,7 @@ const MovieList = (props) => {
         <MovieCardWatched
           key={i}
           title={movie.original_title}
+          year={movie.release_date}
           poster={movie.poster_path}
           review={review}
           rating={rating}
