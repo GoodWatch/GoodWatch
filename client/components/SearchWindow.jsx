@@ -35,9 +35,10 @@ const SearchWindow = () => {
   };
 
   return (
-    <div className='search-window'>
-      <form onSubmit={handleSearchTerm}>
+    <div className='search-window' role ='search-window'>
+      <form onSubmit={handleSearchTerm} role="search-form">
         <TextField
+          role="text-field"
           onChange={handleSearchFieldInput}
           type='text'
           placeholder='Search Movie'
@@ -48,6 +49,7 @@ const SearchWindow = () => {
         ></TextField>
         <span>
           <Button
+            role="search-button"
             type='Submit'
             variant='contained'
             size='medium'

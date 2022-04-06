@@ -18,7 +18,7 @@ const MovieContainer = () => {
     setWatchedState((cur) => !cur);
   };
   return (
-    <div className='movie-container'>
+    <div className='movie-container' role ='movie-container'>
       <h2>
         My Movies
       </h2>

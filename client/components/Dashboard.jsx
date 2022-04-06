@@ -45,7 +45,7 @@ const Dashboard = () => {
   return (
     <ThemeProvider theme={createTheme(light)}>
       <div className='dashboard'>
-        <div className='dashboard-header'>
+        <div className='dashboard-header' role="header">
           <h2>Hello {name}!</h2>
           <img src={GoodWatchLogo} className='dash-logo' />
           <Button
@@ -58,7 +58,7 @@ const Dashboard = () => {
             Sign Out
           </Button>
         </div>
-        <MovieContainer />
+        <MovieContainer  />
         <SearchWindow />
         <RecommendMovies />
       </div>
