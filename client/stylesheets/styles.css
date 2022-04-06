@@ -29,7 +29,9 @@ html, body {
 }
 
 .goodwatch-logo {
-  height:70%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  height:20em;
 }
 
 .dashboard {
@@ -41,7 +43,7 @@ html, body {
   background-color: #fff;
   max-height: 98vh;
   padding: 10px;
-  }
+}
   
   .movie-container {
     grid-area: 2 / 1 / 6 / 3;
@@ -64,7 +66,7 @@ html, body {
     margin-left: 15px;
   }
 
-  .searched-result{
+  .movie-result{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -72,6 +74,8 @@ html, body {
     margin-top: 20px;
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     height: 100%;
     width: 90%;
     border: 2px solid #003385;
@@ -100,9 +104,26 @@ html, body {
     padding: 10px;
   }
 
+  .search-results {
+    position: relative;
+    max-height: 90%;
+    overflow: auto;
+  }
+
+  .search-list {
+    max-height: 95%;
+  }
+
   .movie-card-watched {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-height: 10em;
+  }
+
+  .movie-card-pic {
+    height: 8em;
   }
 
   .review-modal { 
@@ -131,7 +152,7 @@ html, body {
   }
   
   .dash-logo {
-    height: 7em;
+    height:6em;
   }
 
   .review-button {

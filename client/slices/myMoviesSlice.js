@@ -116,7 +116,9 @@ export const myMoviesSlice = createSlice({
   initialState,
   reducers: {
     addMovie: (state, action) => {
-      state.myMoviesList = state.myMoviesList.push(action.payload);
+      const movie = {...action.payload};
+      movie.watched = true;
+      state.myMoviesList.push(movie);
     },
     deleteMovie: (state, action) => {
       state.myMoviesList = state.myMoviesList.filter(

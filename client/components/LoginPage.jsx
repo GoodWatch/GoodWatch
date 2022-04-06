@@ -3,14 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import GoodWatchLogo from '../Public/GoodWatchFilled.png';
+import GoodWatchLogo from '../Public/GoodWatchFilledSmall.png';
 import { InputAdornment } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../slices/usernameSlice';
 import { login } from '../slices/myMoviesSlice';
-
 
 const light = {
   palette: {
@@ -42,11 +41,11 @@ const LoginPage = () => {
   const [status, setStatus] = useState(' ');
   const navigate = useNavigate();
 
-  useEffect(()=> {
+  useEffect(() => {
     console.log(isLoggedIn);
-    if(isLoggedIn) navigate('/dashboard');
+    if (isLoggedIn) navigate('/dashboard');
     else console.log(message);
-  },[isLoggedIn, message]);
+  }, [isLoggedIn, message]);
 
   return (
     <ThemeProvider theme={createTheme(light)}>
@@ -76,7 +75,7 @@ const LoginPage = () => {
                 }}
                 name='user'
                 size='small'
-                style={{ margin: '4px', width: '350px' }}
+                style={{ margin: '20px', width: '350px' }}
                 value={username}
               ></TextField>
               <br />
@@ -95,14 +94,14 @@ const LoginPage = () => {
                 name='password'
                 size='small'
                 value={password}
-                style={{ margin: '4px', width: '350px' }}
+                style={{ margin: '20px', width: '350px' }}
               ></TextField>
               <br />
               <span>
                 <Button
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(login({username, password}));
+                    dispatch(login({ username, password }));
                     setUsername('');
                     setPassword('');
                   }}
