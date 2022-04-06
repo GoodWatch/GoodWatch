@@ -100,10 +100,12 @@ module.exports = {
           success: true,
           message: 'Added Movie to Library',
           username,
-          data: [{
-            ...movieApiInfo,
-            ...userMovieInfo.rows[0],
-          }],
+          data: [
+            {
+              ...movieApiInfo,
+              ...userMovieInfo.rows[0],
+            },
+          ],
         };
       } catch (error) {
         if (error.code === '23505') {
@@ -138,8 +140,9 @@ module.exports = {
     },
     async deleteMovie(_, { movie_id }, { username }) {
       try {
+        console.log(typeof movie_id);
         const query = {
-          text: 'DELETE FROM Users_Movie WHERE username=$1 && movie_id=$2',
+          text: 'DELETE FROM Users_Movies WHERE username=$1 AND movie_id=$2',
           values: [username, movie_id],
         };
         await pool.query(query);
