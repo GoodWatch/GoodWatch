@@ -241,26 +241,28 @@ export const addMovie = createAsyncThunk(
 
 export const deleteMovie = createAsyncThunk(
   '/deleteMovie',
-  async ({ movieId }) => {
+  async ( { movieId } ) => {
     try {
       const response = await axios({
         url: '/graphql',
-        method: 'delete',
+        method: 'post',
         headers: {
           'Content-Type': 'application/json',
         },
         data: {
-          query:`
-          mutation DeleteMovie($movieId: Int!) {
-            deleteMovie(movie_id: $movieId) {
-              success
-              message
+          query: `
+            mutation DeleteMovie($movieId: Int!) {
+              deleteMovie(movie_id: $movieId) {
+                success
+                message
+              }
             }
-          }
           `,
           variables: { movieId },
         },
       });
+      console.log('response in deleteMovie: ', response.data.data.deleteMovie);
+      response.data.data.deleteMovie.movieId = movieId;
       return response.data.data.deleteMovie;
 
     } catch (e) {
@@ -316,7 +318,9 @@ export const myMoviesSlice = createSlice({
       })
       .addCase(deleteMovie.fulfilled, (state, action) => {
         if (action.payload.success) {
-          state.myMoviesList = state.myMoviesList.filter(movie => movie !== action.payload.data[0]);
+          console.log('action.payload',action.payload);
+          state.myMoviesList = state.myMoviesList.filter(movie => movie.id !== action.payload.movieId);
+          // state.myMoviesList.splice(state.myMoviesList.findIndex((movie) => movie.id === action.payload.movieId), 1);
         } else console.log(action.payload.message);
       })
       .addCase(getMovieRecs.fulfilled, (state, action) => {

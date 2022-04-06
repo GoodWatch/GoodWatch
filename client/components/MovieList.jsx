@@ -10,23 +10,27 @@ const MovieList = (props) => {
     return state.myMovies.myMoviesList;
   });
 
+  console.log(myMovies);
+
   const feedItems = [];
-  // check movie
+
   myMovies
-    .filter((movie) => movie.watched == props.watched)
     .forEach((movie, i) => {
-      feedItems.push(
-        <MovieCardWatched
-          key={i}
-          title={movie.original_title}
-          year={movie.release_date}
-          poster={movie.poster_path}
-          review={review}
-          rating={rating}
-          movieId={movie.id}
-        />
-      );
+      if(movie.watched == props.watched) {
+        feedItems.push(
+          <MovieCardWatched
+            key={i}
+            title={movie.original_title}
+            year={movie.release_date}
+            poster={movie.poster_path}
+            review={review}
+            rating={rating}
+            movieId={movie.id}
+          />
+        );
+      }
     });
+
   return <div className='movie-list'>{feedItems}</div>;
 };
 

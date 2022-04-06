@@ -47,18 +47,19 @@ const MovieCardWatched = (props) => {
         src={poster}
       />
       {props.title} ({trimYear(props.year)})
-      <IconButton
-        onClick={() => {
-          dispatch(deleteMovie({ movieID: props.movieID}));
-        }}
-        variant='contained'
-        color='primary'
-        className='button-search'
-        size='large'
-      >
-        <DeleteIcon />
-      </ IconButton>
-      <Stack direction='row' spacing={1}>
+
+      <Stack direction='column' spacing={1}>
+        <IconButton
+          onClick={() => {
+            dispatch(deleteMovie({ movieId: props.movieId}));
+          }}
+          variant='contained'
+          color='primary'
+          className='button-search'
+          size='large'
+        >
+          <DeleteIcon />
+        </ IconButton>
         <Tooltip title='Write Review' placement='right'>
           <IconButton color='primary' onClick={handleClickOpen}>
             <RateReviewIcon />
