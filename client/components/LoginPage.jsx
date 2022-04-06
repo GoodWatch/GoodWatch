@@ -41,9 +41,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(isLoggedIn);
     if (isLoggedIn) navigate('/dashboard');
-    else console.log(message);
+    else console.log(message); //Todo: display on screen
   }, [isLoggedIn, message]);
 
   return (

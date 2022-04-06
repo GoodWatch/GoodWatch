@@ -86,7 +86,7 @@ const typeDefs = gql`
   type Response {
     success: Boolean!
     message: String!
-    username: String!
+    username: String
     data: [MovieExt]
   }
 

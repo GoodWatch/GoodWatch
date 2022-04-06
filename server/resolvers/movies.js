@@ -85,24 +85,33 @@ module.exports = {
     async addMovie(
       _,
       { movie_id, rating = 0, comment = '', watched },
-      { username }
+      { username, dataSources }
     ) {
       try {
         const query = {
-          text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5)',
+          text: 'INSERT INTO Users_Movies(username, movie_id, rating, comment, watched) VALUES($1, $2, $3, $4, $5) RETURNING *',
           values: [username, movie_id, rating, comment, watched],
         };
-        await pool.query(query);
+        const [movieApiInfo, userMovieInfo] = await Promise.all([
+          dataSources.MovieAPI.getMovieInfo({ movie_id }),
+          pool.query(query),
+        ]);
         return {
           success: true,
           message: 'Added Movie to Library',
-          data: [],
+          username,
+          data: [{
+            ...movieApiInfo,
+            ...userMovieInfo.rows[0],
+          }],
         };
       } catch (error) {
         if (error.code === '23505') {
           return {
             success: false,
             message: 'Movie is already in library',
+            username: '',
+            data: [],
           };
         }
         throw new Error(error);
