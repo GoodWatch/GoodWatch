@@ -5,15 +5,14 @@ import { TextField, Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import Dialog from '@mui/material/Dialog';
-import ReviewsIcon from '@mui/icons-material/Reviews';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useNavigate } from 'react-router-dom';
+import { editMovie } from '../slices/myMoviesSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { deleteMovie } from '../slices/myMoviesSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -22,13 +21,13 @@ const MovieCardWatched = (props) => {
   const navigate = useNavigate();
   const poster = `https://image.tmdb.org/t/p/w92${props.poster}`;
   const [open, setOpen] = useState(false);
-  const [review, setReview] = useState('');
+  const [comment, setcomment] = useState('');
   const [rating, setRating] = useState(2);
 
-  const trimYear = (releaseYear) => releaseYear.slice(0,4);
+  const trimYear = (releaseYear) => releaseYear.slice(0, 4);
 
   const handleReviewInput = (event) => {
-    setReview(event.target.value);
+    setcomment(event.target.value);
   };
 
   const handleClickOpen = () => {
@@ -46,12 +45,24 @@ const MovieCardWatched = (props) => {
         className='movie-card-pic'
         src={poster}
       />
-      {props.title} ({trimYear(props.year)})
-
+      <div>
+        {/* <div> add className */}
+        {props.title} ({trimYear(props.year)})
+        <br />
+        Rating: {props.rating}
+        {/* <Rating
+          name='size-small'
+          defaultValue={props.rating}
+          size='small'
+          disabled
+        /> */}
+        <br />
+        Review: {props.review}
+      </div>
       <Stack direction='column' spacing={1}>
         <IconButton
           onClick={() => {
-            dispatch(deleteMovie({ movieId: props.movieId}));
+            dispatch(deleteMovie({ movieId: props.movieId }));
           }}
           variant='contained'
           color='primary'
@@ -59,7 +70,7 @@ const MovieCardWatched = (props) => {
           size='large'
         >
           <DeleteIcon />
-        </ IconButton>
+        </IconButton>
         <Tooltip title='Write Review' placement='right'>
           <IconButton color='primary' onClick={handleClickOpen}>
             <RateReviewIcon />
@@ -90,31 +101,31 @@ const MovieCardWatched = (props) => {
               name='review'
               rows={7}
               size='small'
-              value={review}
+              value={comment}
               style={{ width: '100%' }}
               multiline
             />
-            <span>
-              {/* <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                variant='contained'
-                size='medium'
-                color='primary'
-                className='review-button'
-                style={{ margin: '2px', fontWeight: 'bold', width: '5%' }}
-              >
-                <ReviewsIcon />
-              </Button> */}
-            </span>
           </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant='contained'>
             Cancel
           </Button>
-          <Button onClick={handleClose} variant='contained'>
+          <Button
+            onClick={() => {
+              dispatch(
+                editMovie({
+                  movieId: props.movieId,
+                  comment: comment,
+                  rating: rating,
+                  watched: true,
+                })
+              );
+              // console.log('in onclick', comment, props.movieId, rating);
+              setOpen(false);
+            }}
+            variant='contained'
+          >
             Submit
           </Button>
         </DialogActions>
