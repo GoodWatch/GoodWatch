@@ -13,6 +13,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
+import MoviePosterImg from './MoviePosterImg';
+
 
 const MovieCardWatched = (props) => {
   const navigate = useNavigate();
@@ -35,11 +37,7 @@ const MovieCardWatched = (props) => {
 
   return (
     <div className='movie-card-watched'>
-      <img
-        onClick={() => navigate(`/movie/${props.movieId}`)}
-        className='movie-card-pic'
-        src={poster}
-      />
+      <MoviePosterImg src={poster} movieId={props.movieId}/>
       {props.title}
       <Stack direction='row' spacing={1}>
         <Tooltip title='Write Review' placement='right'>
@@ -53,7 +51,7 @@ const MovieCardWatched = (props) => {
         <DialogContent>
           <form className='review-form'>
             <span>
-              <img className='movie-card-pic' src={poster} />
+              <MoviePosterImg src={poster} movieId={props.movieId}/>
               <Typography component='legend'>Rating</Typography>
               <Rating
                 className='rating'
