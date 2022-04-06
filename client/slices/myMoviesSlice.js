@@ -212,9 +212,7 @@ export const deleteMovie = createAsyncThunk(
         data: {
           query:`
           mutation DeleteMovie($movieId: Int!) {
-            deleteMovie(movie_id: $movieId) {
-
-            }
+            deleteMovie(movie_id: $movieId)
           }
           `,
           variables: { movieId }
