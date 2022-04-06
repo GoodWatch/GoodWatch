@@ -14,9 +14,9 @@ const ReviewModal = () => {
 
   return (
     <div className='review-modal'>
-      <h2>Write a review</h2>
-      <form className='review-form'>
-        <span>
+      <h2>Recommended Movies</h2>
+      <form className=''>
+        {/* <span>
           <Typography component='legend'>Rating</Typography>
           <Rating
             name='simple-controlled'
@@ -51,7 +51,7 @@ const ReviewModal = () => {
           >
             <ReviewsIcon />
           </Button>
-        </span>
+        </span> */}
       </form>
     </div>
   );

@@ -133,9 +133,19 @@ html, body {
     border: 2px solid #003385;
     border-radius: 5px;
     margin: 10px;
-    padding: 8px; 
+    padding: 8px;
+    min-height: 20vh; 
   }
- 
+
+  .review-form{
+    height: 100%;
+    width: 100%;
+  }
+
+ .rating {
+  margin-bottom: 15px;
+ }
+
   .dashboard-header {
     display: flex;
     flex-direction: row;
@@ -158,4 +168,3 @@ html, body {
   .review-button {
     width: 10em;
   }
-

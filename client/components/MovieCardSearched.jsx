@@ -12,6 +12,7 @@ const searchResults = (props) => {
 
   const dispatch = useDispatch();
   const handleAddMovie = () => {
+
     dispatch(addMovie(props.movie));
   };
   return (
