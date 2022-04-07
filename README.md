@@ -32,9 +32,9 @@ An open source movie library platform for viewing movie info and saving movies f
 - Node
 - Express
 - Apollo
+- Graphql
 - bCrypt
 - JSON Web Tokens
-- Graphql
 - PostgreSQL
 - MaterialUI
 - Jest
