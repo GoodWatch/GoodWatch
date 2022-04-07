@@ -17,7 +17,7 @@ module.exports = {
   devtool: 'eval-source-map',
   mode: process.env.NODE_ENV,
   devServer: {
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     // host: 'localhost',
     port: 8080,
     hot: true,
