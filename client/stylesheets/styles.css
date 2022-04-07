@@ -43,6 +43,7 @@ html, body {
   background-color: #fff;
   max-height: 98vh;
   padding: 10px;
+  border-radius: .5rem;
 }
 
   .movie-container {
