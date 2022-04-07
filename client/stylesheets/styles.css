@@ -1,3 +1,249 @@
-body {
-  background-color: green
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  background: #003385;
+  color: black;
+  font-family: Roboto;
+}
+
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.login-page {
+  background-color: #1061E4;
+  height: 700px;
+  width: 500px;
+  text-align: center;
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+.goodwatch-logo {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  height:20em;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: #fff;
+  max-height: 98vh;
+  padding: 10px;
+  border-radius: .5rem;
+}
+
+  .movie-container {
+    grid-area: 2 / 1 / 6 / 3;
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid #003385; */
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  }
+
+  .movie-list {
+    padding: 10px;
+    position: relative;
+    min-height: 85%;
+    max-height: 95%;
+    overflow: auto;
+  }
+
+  .movie-card-watched-title {
+    text-align: center;
+  }
+
+  .review-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    margin-left: 15px;
+  }
+
+  .movie-result{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 100%;
+    width: 90%;
+    margin-left: 20px;
+    /* border: 2px solid #003385; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: transform .3s;
+  }
+  .movie-result:hover {
+    transform: scale(1.05);
+  }
+
+  .button-search {
+    height: 40px;
+  }
+
+  .movie-card-buttons {
+    position: relative;
+    float: right;
+  }
+
+  .movie-card-watched {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px;
+    height: 100%;
+    width: 90%;
+    /* border: 2px solid #003385; */
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: transform .3s;
+  }
+  .movie-card-watched:hover {
+      transform: scale(1.05);
+    }
+
+
+  .search-window {
+    grid-area: 2 / 3 / 5 / 6;
+    /* border: 2px solid #003385; */
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  }
+
+  .search-results {
+    position: relative;
+    max-height: 90%;
+    overflow: auto;
+  }
+
+  .movie-card-text {
+    position: relative;
+    flex-grow: 7;
+    float: left;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 5px;
+  }
+
+  /* .search-list {
+    min-height: 85%;
+    max-height: 95%;
+  } */
+
+  .movie-card-watched {
+    display: flex;
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    width: 97%;
+    max-height: 10em;
+  }
+
+  .movie-card-pic {
+    height: 8em;
+    cursor: pointer;
+    border-radius: .5rem;
+  }
+
+  .review-modal {
+    grid-area: 5 / 3 / 6 / 6;
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid #003385; */
+    border-radius: 5px;
+    margin: 10px;
+    padding: 12px;
+    min-height: 20vh;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  }
+
+  .review-form{
+    height: 100%;
+    width: 100%;
+  }
+
+ .rating {
+  margin-bottom: 15px;
+ }
+
+  .dashboard-header {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    background-color: #003385;
+    justify-content: space-around;
+    align-items: center;
+    grid-area: 1 / 1 / 2 / 6;
+    border: 2px solid #003385;
+    border-radius: 5px;
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .dash-logo {
+    height:6em;
+  }
+
+  .review-button {
+    width: 10em;
+  }
+
+
+
+.MP-title {
+  display: flex;
+}
+
+/* .MP-title img:first-child {
+  postiion: absolute;
+  width: 100%;
+  height: auto;
+  opacity: .3;
+} */
+
+.MP-bg-img {
+  opacity: 0.6;
+  position: absolute;
+  left: 0;
+  top: 5rem;
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+
+
+.MP-title img:last-child {
+  height: 20rem
+}
+
+#recommended-pic {
+  transition: transform .3s;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#recommended-pic:hover {
+  transform: scale(1.05)
 }

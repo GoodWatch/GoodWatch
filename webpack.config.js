@@ -17,7 +17,7 @@ module.exports = {
   devtool: 'eval-source-map',
   mode: process.env.NODE_ENV,
   devServer: {
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     // host: 'localhost',
     port: 8080,
     hot: true,
@@ -33,8 +33,8 @@ module.exports = {
 
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
-      '/api/**': {
-        target: 'http://localhost:3000/',
+      '/graphql/**': {
+        target: 'http://localhost:4000/',
         secure: false,
       },
     },
@@ -51,6 +51,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+        type: 'asset/resource',
       },
     ],
   },
