@@ -1,0 +1,15 @@
+version: '3'
+services:
+  bash:
+    image: arishoham/gw-dev
+    container_name: "gw-dev"
+    ports:
+      - "8080:8080"
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: docker-compose bash
+volumes:
+  node_modules:
+  

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  test:
+    image: arishoham/gw-dev
+    container_name: "mm-test"
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run test
+volumes:
+  node_modules:
+  

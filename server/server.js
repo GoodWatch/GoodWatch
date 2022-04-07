@@ -17,7 +17,8 @@ const dataSources = () => ({
 });
 
 async function startApolloServer(typeDefs, resolvers, dataSources) {
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction = process.env.NODE_ENV !== 'development';
+  // const PORT = process.env.PORT || '4000';
   const app = express();
   const httpServer = http.createServer(app);
   const server = new ApolloServer({

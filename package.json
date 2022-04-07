@@ -8,7 +8,12 @@
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open /\" \"cross-env NODE_ENV=development nodemon ./server/server.js\"",
     "start-dev": "cross-env NODE_ENV=development nodemon ./server/server.js",
-    "start": "cross-env NODE_ENV=production nodemon ./server/server.js"
+    "start": "cross-env NODE_ENV=production nodemon ./server/server.js",
+    "docker-prod": "docker run -p 4000:4000 arishoham/gw-prod",
+    "docker-dev": "docker-compose -f docker-compose-dev-hot.yml up",
+    "docker-test": "docker-compose -f docker-compose-test.yml up",
+    "docker-install": "docker-compose run --rm --service-ports bash npm install",
+    "docker-remove-all": "docker rm $(docker ps -q -a -f 'name=gw-') --force && docker image rm $(docker images arishoham/gw* -q) --force && docker volume rm $(docker volume ls -q -f 'name=unit-13*') --force"
   },
   "repository": {
     "type": "git",
@@ -49,6 +54,7 @@
     "pg": "^8.7.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {

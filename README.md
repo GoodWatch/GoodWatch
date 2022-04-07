@@ -40,6 +40,7 @@ An open source movie library platform for viewing movie info and saving movies f
 - Jest
 - React Testing Library
 - Webpack
+- Docker
 
 ## Screenshots
 ![Screenshot](https://github.com/GoodWatch/GoodWatch/blob/dev/client/Public/Screenshot1.png?raw=true)
